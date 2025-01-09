@@ -6,6 +6,8 @@ import me.xiaoying.sql.SqlFactory;
 import java.io.File;
 
 public class LACore {
+    private static SqlFactory sqlFactory = null;
+
     private static final Logger logger = new Logger();
 
     public static File getDataFolder() {
@@ -16,8 +18,14 @@ public class LACore {
         return LACore.logger;
     }
 
-    public static SqlFactory gegSqlFactory() {
+    public static void setSqlFactory(SqlFactory sqlFactory) {
+        if (LACore.sqlFactory != null)
+            return;
 
-        return null;
+        LACore.sqlFactory = sqlFactory;
+    }
+
+    public static SqlFactory gegSqlFactory() {
+        return LACore.sqlFactory;
     }
 }
