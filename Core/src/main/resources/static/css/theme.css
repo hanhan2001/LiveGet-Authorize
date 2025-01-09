@@ -1,0 +1,38 @@
+a {
+	color: #6666AA;
+}
+
+a:hover {
+	color: #5555AA;
+}
+
+a:active {
+	color: #6666AA;
+}
+
+.content .display .display_box_shop_subsidiary .list .item .button .info {
+	background-color: #55A155;
+}
+
+.content .display .display_box_shop_subsidiary .list .item .button .info:hover {
+	background-color: #558855;
+}
+
+.content .display .display_box_shop_subsidiary .list .item .button .info:active {
+	background-color: #557755;
+}
+
+.content .display .display_box_shop_subsidiary .list .item .button .buy {
+	background-color: #FF5555;
+}
+
+.content .display .display_box_shop_subsidiary .list .item .button .buy:hover {
+	background-color: #DD5555;
+}
+.content .display .display_box_shop_subsidiary .list .item .button .buy:active {
+	background-color: #BB5555;
+}
+
+.popup .info {
+	background-color: white;
+}

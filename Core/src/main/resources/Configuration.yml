@@ -1,0 +1,63 @@
+#服务设置
+Server:
+  #占用IP
+  Host: "0.0.0.0"
+  #占用端口
+  Port: 22332
+
+#设置
+Setting:
+  #JWT设置
+  Jwt:
+    #ID
+    KeyId: "3241c643b20442faac67cd5c406b288f"
+    #公钥
+    PublicKey: "{\"kty\":\"RSA\",\"kid\":\"3241c643b20442faac67cd5c406b288f\",\"alg\":\"RS256\",\"n\":\"2n1fMVjUMyCM-HWBCSt0YcNdb2osAlHJrBMyZ7reh9sq64Gq-Q_zf9Ndk9JNjwaEjRXf3viwORORjwqWxKeI2k15gb8jrw6t7If92udsKsZGm57BMG3xjnY7Y-X1XSkTP2AgzKwWkYEBCq1GO2e5nFN0BsbLc5-ewzTI7ONLNDyoQQ3ytK4oJslV0xIvdVVlWVQczDRUMgrzsm6EdHxIAVazRLVZ6ooiYEX4X4CKOPdM7wvC8VeLLbYK5-cHP42nIRCbA9DnWR_7makmJmOT7lML4L4KDpkPy0bdiPG1d04LE1zGlsrW3OLmMYuxVprL5rgUwJxGk_mMw2xCRkzA1w\",\"e\":\"AQAB\"}"
+    #私钥
+    PrivateKey: "{\"kty\":\"RSA\",\"kid\":\"3241c643b20442faac67cd5c406b288f\",\"alg\":\"RS256\",\"n\":\"2n1fMVjUMyCM-HWBCSt0YcNdb2osAlHJrBMyZ7reh9sq64Gq-Q_zf9Ndk9JNjwaEjRXf3viwORORjwqWxKeI2k15gb8jrw6t7If92udsKsZGm57BMG3xjnY7Y-X1XSkTP2AgzKwWkYEBCq1GO2e5nFN0BsbLc5-ewzTI7ONLNDyoQQ3ytK4oJslV0xIvdVVlWVQczDRUMgrzsm6EdHxIAVazRLVZ6ooiYEX4X4CKOPdM7wvC8VeLLbYK5-cHP42nIRCbA9DnWR_7makmJmOT7lML4L4KDpkPy0bdiPG1d04LE1zGlsrW3OLmMYuxVprL5rgUwJxGk_mMw2xCRkzA1w\",\"e\":\"AQAB\",\"d\":\"RSHTO3l4Vx8PC9SeOgkKX56h0018VFWNoslGMyUhIUp7N55FO15NNR5rZwjtanps-Xk450O3-q9S6Lg4gUvjVPObpS6V-1-BL6zN6XQ9OQGYuMfQJ-M5wdJuM0tBSjNjeDOR3UD8ORjg_ABcjxJgW_LZ7QT8vf59DRYIF1BJ7OJIuXQ_kmwWyPgZ4CSuKrQua_h1OVA3K-Pavg7Ajt1itOYId_Aocc_TeaneUF0230PsREZFqwkiHFinvDz14F7kekxpB8kb2oCe-OAq9pqz3bTmxbz9L6mhqjHADyeqLDPHUjzcUZGcW91RaYb0mfBqVHeY2gu1w47Oz-sVjmp7FQ\",\"p\":\"9HACmTuKVREthZtAIY35aZQzmAn8VjLFyktcVhpqE5KGWgToq-R5Eve9XwDCPfDXwAZbt9fjmzRprxuHf_wKEqtADAJogB_jNmiXsQMkZbjQzXKOY9hPRCmDL_pPcBgi0yuzshshP89RyRnUskcwPkbvprIR2DM_f9hkRJuDD2s\",\"q\":\"5NMmSWwO2nXGPxBwJTtVn8IN9HTR8gh96Wx8CpE7IP3WnABExVtZ8y_aCSLZcUsemXSg1aVzs3aTb6UU4W-87RRE32u_zPXjMUgdg8th9seFPOXaVM4D53kOeCVjAMa6iR5qiaEWnoKJgvshd60HjWKGqxWdJ8C2EhgclVLwC0U\",\"dp\":\"at5x9Ga4szqAaZKX9lOpQQS_jfCHt3QZT7mlFCwWRppgTQkqZMTOPoG79MZTJlufKGBfR0CHTXsb3agulMEv8juXE-kVoTbP0yDleUnDZwnnmHtGT9bpyQZRSe-pPXv_9c18khkUb16IBmFZwdwn9oJzErF15c16LL4CEJDhOyM\",\"dq\":\"mRYeZj6RzVu_zs8rh-0jQqdr-KDzGE7QFgtLDTLOcSsBmgqf970-93CLGVOkT6RnC1k4hNaVCnqI9sdlqdC8f4vw69xFTFUwsvbBMDwwBQ7Et9I6-EN_3ythH8Y7bviFMVkVA5Cu9kr0vplOcadkBxXkbK8gHclSxdY1wTzkdVU\",\"qi\":\"V5whlLkPsXoV2PqRLqKALopMSqqsjtOmK8ztN54n7VO-RLfr9rSJGUrpwOGcYPHo1zk8eMWJJyTFtBcUpsAkjM9yZkluBSoqkiCcq1qyciix682OqLJAudSHH9KuqtvQ4GCqAsfqpdnrGS06VpZjQNKwwPYLMIhHZIIl18EdA5s\"}"
+  #缓存
+  Cache:
+    #用户缓存
+    User:
+      #缓存时间(单位: 秒)
+      Time: 5184000
+      #是否在关闭服务器时将缓存实体信息存入文件
+      #开启后关闭服务器会将已存在用户实体存入文件中以便下次启动服务时读取缓存信息
+      Save: true
+    #授权码缓存
+    Token:
+      #缓存时间(单位: 秒)
+      Time: 5184000
+      #是否在关闭服务器时将缓存实体信息存入文件
+      #开启后关闭服务器会将已存在授权码实体存入文件中以便下次启动服务时读取缓存信息
+      Save: true
+  #服务密码
+  Password:
+    #加密方式(base64/MD5/SHA256，推荐SHA256，不推荐base64)
+    Encrypt: "SHA256"
+    #密码
+    Password: "C7806234B5A8590291323D3A3D9016ED65F33284BD546EB17E99F7BB4EF7D5A3"
+  #数据缓存时间
+  DataCacheTime: 5184000
+  #日期格式
+  DateFormat: "yyyy/MM/dd-HH:mm:ss"
+  #存储数据
+  Data:
+    #存储方式(SQLite/Mysql)
+    Type: "MYSQL"
+    Mysql:
+      #地址
+      Hostname: "jdbc:mysql://localhost"
+      #端口
+      Port: 3306
+      #数据库
+      Database: "authorize"
+      #用户名
+      Username: "root"
+      #密码
+      Password: "root"
+      #重连次数
+      ReconnectTime: 10
+      #重连间隔(单位: 秒)
+      ReconnectDelay: 3
+    Sqlite: "./authorize.db"

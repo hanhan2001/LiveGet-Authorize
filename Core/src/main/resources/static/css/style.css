@@ -1,0 +1,205 @@
+div[type="bar"] {
+	border-radius: 3px;
+	box-shadow: 0px 0px 5px #666666;
+}
+
+div[type="button"] {
+	border-radius: 3px;
+	background-color: transparent;
+	width: 25px;
+	height: 25px;
+	background-size: cover;
+	-webkit-user-select: none;
+	cursor: pointer;
+	transition: .2s;
+}
+
+div[type="button"]:hover {
+	background-color: #EFEFEF;
+}
+div[type="button"]:active {
+	background-color: #DDDDDD;
+}
+
+div[type="tools_button"] {
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	transition: 0.2s;
+	border-radius: 3px;
+	position: relative;
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
+div[type="tools_button"]:hover {
+	width: 200px;
+	background-color: #EFEFEF;
+	box-shadow: 0px 0px 5px #666666;
+}
+
+div[type="tools_button"] .image {
+	height: 40px;
+	width: 40px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: absolute;
+}
+
+div[type="tools_button"] .image:after {
+	content: "";
+	display: inline-block;
+	position: absolute;
+	width: 2px;
+	border-radius: 3px;
+	height: 30px;
+	background-color: #BBBBBB;
+	top: 5px;
+	left: 50px;
+}
+
+div[type="tools_button"] .text {
+	position: absolute;
+	left: 60px;
+	white-space: nowrap;
+}
+
+div[type="tools_button"] .text .title {
+	font-size: 15px;
+	margin-top: 3px;
+}
+
+div[type="tools_button"] .text .description {
+	font-size: 10px;
+	margin-top: -3px;
+}
+
+div[type="tools_button"]:active {
+	width: 200px;
+	background-color: #DDDDDD;
+	box-shadow: 0px 0px 5px #666666;
+}
+
+div[type="href_button"] {
+	-webkit-user-select: none;
+	border-radius: 3px;
+	padding: 10px 50px 10px 50px;
+	transition: background-color 0.2s;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+div[type="href_button"]:hover {
+	background-color: #DDDDDD;
+}
+
+div[type="href_button"]:active {
+	background-color: #BBBBBB;
+}
+
+div[type="shop_button"] {
+	border-radius: 3px;
+	padding: 5px 10px 5px 10px;
+	color: white;
+	margin-right: 5px;
+	cursor: pointer;
+	transition: all .2s;
+	-webkit-user-select: none;
+}
+
+input[class="input"] {
+	border: none;
+	background-color: transparent;
+	outline: none;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+input[type="submit"] {
+	border: none;
+	padding: 10px 15px;
+	border-radius: 3px;
+	background-color: #999999;
+	cursor: pointer;
+	transition: border 0.2s, background-color 0.2s;
+}
+
+input[type="submit"]:hover {
+	background-color: #777777;
+}
+
+input[type="submit"]:active {
+	background-color: #555555;
+}
+
+div[type="info_box"] {
+	border: 1px solid #EEEEEE;
+	transition: all 0.2s;
+	display: flex;
+}
+
+div[type="info_box"]:hover {
+	border: 1px solid #DDDDDD;
+}
+
+div[type="info_box"] .caption {
+	writing-mode: vertical-rl;
+	text-orientation: upright;
+	transition: all 0.2s;
+	text-align: center;
+	padding: 0px 2px 0px 2px;
+	background-color: #EEEEEE;
+}
+
+div[type="info_box"]:hover .caption {
+	background-color: #DDDDDD;
+}
+
+div[type="info_box"] .box {
+	margin-left: 5px;
+	padding: 5px 0px 5px 0px;
+}
+
+a {
+	font-weight: bold;
+	transition: color 0.2s;
+}
+
+/* 滚动条 */
+*::-webkit-scrollbar {
+	background-color: #EEEEEE;
+	width: 3px;
+	height: 3px;
+	border-radius: 50px;
+}
+
+*::-moz-scrollbar {
+	background-color: #EEEEEE;
+	width: 3px;
+	height: 3px;
+	border-radius: 50px;
+}
+
+*::-webkit-scrollbar:hover {
+	width: 10px;
+}
+*::-moz-scrollbar:hover {
+	width: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: #DDDDDD;
+	border-radius: 15px;
+}
+
+*::-moz-scrollbar-thumb {
+	background-color: #DDDDDD;
+	border-radius: 15px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background-color: #CCCCCC;
+}
+
+*::-moz-scrollbar-thumb:hover {
+	background-color: #CCCCCC;
+}

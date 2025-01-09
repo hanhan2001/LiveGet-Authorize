@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LiveGet</title>
+    <link rel="stylesheet" type="text/css" href="css/master.css">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <link rel="stylesheet" type="text/css" href="css/animation.css">
+    <script type="text/javascript" src="js/json.js"></script>
+    <script type="text/javascript" src="js/websocket.js"></script>
+    <script type="text/javascript" src="js/javascript.js"></script>
+    <script type="text/javascript" src="js/Music.js"></script>
+    <script type="text/javascript" src="js/Classification.js"></script>
+    <script type="text/javascript" src="js/MessageManager.js"></script>
+    <script type="text/javascript" src="js/MessageEntity.js"></script>
+</head>
+<body>
+    <audio id="music" src="./music/DunnyDunnyDunny.mp3" autoplay="autoplay" preload="auto"></audio>
+    <div class="popup">
+        <div class="info">
+            <label>Content</label>
+        </div>
+    </div>
+    <div type="bar" class="music">
+        <div type="button" title="播放" class="sound" onclick="playMusic()" style="background-image: url('./images/sound.svg')"></div>
+    </div>
+    <div class="content">
+        <div type="bar" class="tools">
+            <div class="tools_logo">
+                <div type="tools_button">
+                    <div class="image" style="background-image: url('https://p.qlogo.cn/gh/418631956/418631956/100')"></div>
+                    <div class="text">
+                        <div class="title">加入群聊</div>
+                        <div class="description">加入QQ群聊</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tools_choose">
+                <div type="tools_button" class="tools_choose_preview" onclick="openClassification('preview')">
+                    <div class="image" style="background-image: url('images/preview.svg')"></div>
+                    <div class="text">
+                        <div class="title">概览</div>
+                        <div class="description">查看服务概览</div>
+                    </div>
+                </div>
+                <div type="tools_button" class="tools_choose_code" onclick="openClassification('code')">
+                    <div class="image" style="background-image: url('images/control.svg')"></div>
+                    <div class="text">
+                        <div class="title">授权码</div>
+                        <div class="description">授权码设置</div>
+                    </div>
+                </div>
+                <div type="tools_button" class="tools_choose_shop" onclick="openClassification('shop')">
+                    <div class="image" style="background-image: url('images/shop.svg')"></div>
+                    <div class="text">
+                        <div class="title">服务</div>
+                        <div class="description">购置服务</div>
+                    </div>
+                </div>
+                <div type="tools_button" class="tools_choose_set" onclick="openClassification('set')">
+                    <div class="image" style="background-image: url('images/set.svg')"></div>
+                    <div class="text">
+                        <div class="title">设置</div>
+                        <div class="description">账户设置</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tools_bottom">
+                <div type="tools_button" class="tools_bottom_quit" onclick="logout()">
+                    <div class="image" style="background-image: url('images/quit.svg')"></div>
+                    <div class="text">
+                        <div class="title">退出</div>
+                        <div class="description">退出登录</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="display">
+            <div type="bar" class="display_hrefs">
+                <div class="display_hrefs_bar display_hrefs_preview">
+                    <div class="line"></div>
+                    <div type="href_button" class="display_box_preview_button" onclick="openDisplayBox('preview', 'preview')">概览</div>
+                </div>
+                <div class="display_hrefs_bar display_hrefs_code">
+                    <div class="line"></div>
+                    <div type="href_button" class="display_box_code_button" onclick="openDisplayBox('code', 'code')">授权码</div>
+                </div>
+                <div class="display_hrefs_bar display_hrefs_shop">
+                    <div class="line"></div>
+                    <div type="href_button" class="display_box_shop_code_button" onclick="openDisplayBox('shop', 'code')">授权</div>
+                    <div type="href_button" class="display_box_shop_subsidiary_button" onclick="openDisplayBox('shop', 'subsidiary')">附属</div>
+                </div>
+                <div class="display_hrefs_bar display_hrefs_set">
+                    <div class="line"></div>
+                    <div type="href_button" class="display_box_set_button" onclick="openDisplayBox('set', ' set')">设置</div>
+                </div>
+                <div class="display_hrefs_bar display_hrefs_login">
+                    <div class="line"></div>
+                    <div type="href_button" class="display_box_login_login_button" onclick="openDisplayBox('login', 'login')">登录</div>
+                    <div type="href_button" class="display_box_login_register_button" onclick="openDisplayBox('login', 'register')">注册</div>
+                </div>
+            </div>
+            <div type="bar" class="display_box display_box_login_login">
+                <div class="login">
+                    <div class="box" type="bar">
+                        <form class="form" name="liveget" method="post" action="./login">
+                            <h1>登录</h1>
+                            <p>账 户:&nbsp;&nbsp;<input class="input" id="account" type="text" name="account" placeholder="QQ号/邮箱" autocomplete="off"></p>
+                            <p>密 码:&nbsp;&nbsp;<input class="input" id="password" type="password" name="password" placeholder="密码" autocomplete="off"></p>
+                            <input type="submit" name="" value="登 录">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div type="bar" class="display_box display_box_login_register">
+                <div class="register">
+                    <div class="box" type="bar">
+                        <form class="form" name="liveget_register" method="post" action="./register">
+                            <h1>注册</h1>
+                            <p>Q Q:&nbsp;&nbsp;<input class="input" type="text" name="account" placeholder="QQ号" autocomplete="off"></p>
+                            <p>邮 箱:&nbsp;&nbsp;<input class="input" type="text" name="email" placeholder="邮箱" autocomplete="off"></p>
+                            <p>密 码:&nbsp;&nbsp;<input class="input" type="password" name="password" placeholder="密码" autocomplete="off"></p>
+                            <p>确 认:&nbsp;&nbsp;<input class="input" type="password" name="confirm" placeholder="确认密码" autocomplete="off"></p>
+                            <input type="submit" name="" value="注 册">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div type="bar" class="display_box display_box_preview">
+                <div class="show">
+                    <div class="text">
+                        <div class="preview">
+                            <div class="title">
+                                <div class="message" type="info_box">
+                                    <div class="caption">公&nbsp;告</div>
+                                    <div class="box">
+                                        你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="self_info">
+                                <div type="info_box" class="token">
+                                    <div class="caption">授&nbsp;权&nbsp;码</div>
+                                    <div class="box">
+                                        <div class="total">总数: 0</div>
+                                        <div class="used">已使用总数: 0</div>
+                                        <div class="free">未使用总数: 0</div>
+                                        <div class="overdue">过期总数: 0</div>
+                                    </div>
+                                </div>
+                                <div type="info_box" class="service">
+                                    <div class="caption">服&nbsp;&nbsp;务</div>
+                                    <div class="box">
+                                        <div class="total">可用总数: 0</div>
+                                        <div class="list">
+                                            <ul>
+                                                服务列表
+                                                <li>服务1</li>
+                                                <li>服务2</li>
+                                                <li>服务3</li>
+                                                <li>服务4</li>
+                                            </ul>
+                                        </div>
+                                        <div class="overdue">过期总数: 0</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="user_info" type="bar">
+                    <div class="user">
+                        <div class="photo" style="background-image: url('https://q1.qlogo.cn/g?b=qq&nk=764932129&s=640');"></div>
+                        <div class="name" type="bar">User</div>
+                    </div>
+                    <div class="info">
+                        <div class="box">
+                            <!-- 手机号，邮箱等 -->
+                            <div class="account_self_info">
+                                <div class="line telephone" type="bar">手机号: 123456789</div>
+                                <div class="line email" type="bar">邮箱: 123456789@qq.com</div>
+                                <div class="line property" type="bar">账户余额: 200 元</div>
+                                <div class="line identity" type="bar">账户身份: 普通用户</div>
+                            </div>
+                            <!-- 注册时间，最后一次登录时间，登录ip -->
+                            <div class="account_login_info">
+                                <div class="line ip" type="bar">登录IP: 192.168.1.1</div>
+                                <div class="line registerTime" type="bar">注册时间: 2024/05/08-17:20:12</div>
+                                <div class="line lastLoginTime" type="bar">最后登录时间: 2024/05/11-18:13:36</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div type="bar" class="display_box display_box_code"></div>
+            <div type="bar" class="display_box display_box_shop_code"></div>
+            <div type="bar" class="display_box display_box_shop_subsidiary">
+                <div class="list">
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品1</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品2</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="name">商品3</div>
+                        <div class="button">
+                            <div type="shop_button" class="info">详情</div>
+                            <div type="shop_button" class="buy">购买</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div type="bar" class="display_box display_box_set"></div>
+        </div>
+    </div>
+</body>
+</html>

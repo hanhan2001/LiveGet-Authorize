@@ -1,0 +1,269 @@
+# -1 系统异常
+# 110 统一失败编码
+# 200 统一成功编码
+
+#账户信息
+Account:
+  #登录
+  Login: |-
+    {
+      "code": 200,
+      "type": "account_login",
+      "account": "%account%",
+      "token": "%token%",
+      "message": "Login success.",
+      "time": "%date%"
+    }
+  #信息
+  Info: |-
+    {
+      "code": 200,
+      "type": "account_info",
+      "qq": "%qq%",
+      "email": "%email%",
+      "telephone": "%telephone%",
+      "uuid": "%uuid%",
+      "name": "%name%",
+      "ip": "%ip%",
+      "registerTime": "%registerTime%",
+      "lastLoginTime": "%lastLoginTime%",
+      "photo": "%photo%",
+      "time": "%date%"
+    }
+  #密码错误
+  PasswordInvalid: |-
+    {
+      "code": 110,
+      "type": "account_password_invalid",
+      "message": "Password invalid.",
+      "time": "%date%"
+    }
+  #未找到用户
+  NotFound: |-
+    {
+      "code": 110,
+      "type": "account_not_found_user",
+      "message": "Can't find user.",
+      "time": "%date%"
+    }
+  #用户已存在
+  UserExisted: |-
+    {
+      "code": 110,
+      "type": "account_user_existed",
+      "message": "User already exists.",
+      "time": "%date%"
+    }
+  #邮箱已绑定
+  EmailExisted: |-
+    {
+      "code": 110,
+      "type": "account_email_existed",
+      "message": "Email already exists.",
+      "time": "%date%"
+    }
+  #需要登录
+  NeedLogin: |-
+    {
+      "code": 110,
+      "type": "account_need_login",
+      "message": "Token is over due, please re login.",
+      "time": "%date%"
+    }
+
+#展示信息
+Display:
+  #总览
+  Preview:
+    #公告
+    Title: |-
+      {
+        "code": 200,
+        "type": "display_preview_title",
+        "message": "%title%",
+        "time": "%date%"
+      }
+
+#权限信息
+Permission:
+  #权限验证成功
+  HasPermission: |-
+    {
+      "code": 200,
+      "type": "permission_true",
+      "message": "Check permission success",
+      "time": "%date%"
+    }
+  #无权限
+  MissingPermission: |-
+    {
+      "code": 110,
+      "type": "permission_missing",
+      "message": "Missing permission.",
+      "time": "%date%"
+    }
+
+#模块
+Module:
+  #模块信息
+  Info: |-
+    {
+      "code": 200,
+      "type": "module_info",
+      "function": "%function%",
+      "object": "%object%",
+      "save": "%save%",
+      "over": "%over%",
+      "owner": "%owner%",
+      "description": "%description%",
+      "identification": "%identification%",
+      "permission": "%permission%",
+      "time": "%date%"
+    }
+  #模块不存在
+  NotFound: |-
+    {
+      "code": 110,
+      "type": "module_not_found",
+      "message": "Can't find module.",
+      "time": "%date%"
+    }
+  #模块已存在
+  Existed: |-
+    {
+      "code": 110,
+      "type": "module_existed",
+      "message": "This module existed.",
+      "time": "%date%"
+    }
+  #模块过期
+  Expired: |-
+    {
+      "code": 110,
+      "type": "module_expired",
+      "Message": "This module expired.",
+      "time": "%date%"
+    }
+  #删除模块
+  Deleted: |-
+    {
+      "code": 200,
+      "type": "module_delete",
+      "function": "%function%",
+      "object": "%object%",
+      "uuid": "%uuid%",
+      "message": "Deleted module.",
+      "time": "%date%"
+    }
+
+#授权码
+Token:
+  #授权码信息
+  Info: |-
+    {
+      "code": 200,
+      "type": "token_info",
+      "uuid": "%uuid%",
+      "token": "%token%",
+      "function": "%function%",
+      "object": "%object%",
+      "save": "%save%",
+      "over": "%over%",
+      "machine": "%machine%",
+      "lastUse": "%lastUse%",
+      "time": "%date%"
+    }
+  #授权码过期
+  Expired: |-
+    {
+      "code": 110,
+      "type": "token_expired",
+      "message": "This token expired.",
+      "time": "%date%"
+    }
+  #授权码已存在
+  Existed: |-
+    {
+      "code": 110,
+      "type": "token_existed",
+      "message": "This token existed.",
+      "time": "%date%"
+    }
+  #无法找到授权码
+  NotFound: |-
+    {
+      "code": 110,
+      "type": "token_not_found",
+      "message": "Can't find token.",
+      "time": "%date%"
+    }
+  #机器码错误
+  ErrorMachine: |-
+    {
+      "code": 110,
+      "type": "token_machine_error",
+      "message": "Machine error.",
+      "time": "%date%"
+    }
+  #授权码验证通过
+  Verified: |-
+    {
+      "code": 200,
+      "type": "token_verified",
+      "message": "Token verified.",
+      "time": "%date%"
+    }
+  #删除授权码
+  Delete: |-
+    {
+      "code": 200,
+      "type": "token_delete",
+      "token": "%token%",
+      "function": "%function%",
+      "object": "%object%",
+      "message": "Deleted token.",
+      "time": "%date%"
+    }
+  #授权码列表
+  List: |-
+    {
+      "code": 200,
+      "type": "token_list",
+      "list": [
+        %token_list%
+      ]
+    }
+#       {
+#          "token": "%token%",
+#          "save": "%save%",
+#          "over": "%over%",
+#          "bind": "%bind%"
+#        }
+
+#报错信息
+Error:
+  #普通报错信息
+  Normal: |-
+    {
+      "code": -1,
+      "type": "error",
+      "message": "An error has occurred, please send this page to the website administrator.",
+      "time": "%date%"
+    }
+  #缺少参数
+  NeedParameter: |-
+    {
+      "code": 110,
+      "type": "error_need_parameter",
+      "parameter": %parameter%,
+      "message": "Missing parameter.",
+      "time": "%date%"
+    }
+  #系统密码错误
+  PasswordInvalid: |-
+    {
+      "code": 110,
+      "type": "error_password_invalid",
+      "message": "Password invalid.",
+      "time": "%date%"
+    }
