@@ -16,8 +16,10 @@ public class LiveGetAuthorizeServer {
         LACore.getLogger().info("Initialize...");
         LiveGetAuthorizeServer.initialize();
 
-        SpringApplication springApplication = new SpringApplication(LiveGetAuthorizeServer.class);
+        System.setProperty("server.address", FileConfig.SERVER_HOST);
+        System.setProperty("server.port", String.valueOf(FileConfig.SERVER_PORT));
 
+        SpringApplication springApplication = new SpringApplication(LiveGetAuthorizeServer.class);
         springApplication.setBannerMode(Banner.Mode.OFF);
     }
 
@@ -25,5 +27,8 @@ public class LiveGetAuthorizeServer {
         // file
         LiveGetAuthorizeServer.fileManager = new SimpleFileManager();
         LiveGetAuthorizeServer.fileManager.register(new FileConfig());
+
+        // SqlFactory
+//        switch (FileConfig.)
     }
 }
