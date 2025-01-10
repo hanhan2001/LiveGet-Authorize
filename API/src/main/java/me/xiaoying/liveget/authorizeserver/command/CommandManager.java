@@ -12,6 +12,14 @@ public interface CommandManager {
     void registerCommand(String fallbackPrefix, Command command);
 
     /**
+     * Get command by name or alias
+     *
+     * @param command Command's name or alias
+     * @return Command
+     */
+    Command getCommand(String command);
+
+    /**
      * Perform command
      *
      * @param command string
