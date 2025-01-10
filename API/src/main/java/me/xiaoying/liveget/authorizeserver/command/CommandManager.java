@@ -1,5 +1,7 @@
 package me.xiaoying.liveget.authorizeserver.command;
 
+import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+
 public interface CommandManager {
     /**
      * Register command
@@ -15,5 +17,5 @@ public interface CommandManager {
      * @param command string
      * @return Determine command work
      */
-    boolean dispatch(String command);
+    boolean dispatch(CommandSender sender, String command);
 }
