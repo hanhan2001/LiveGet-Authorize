@@ -1,12 +1,15 @@
 package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.CommandManager;
+import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+import me.xiaoying.liveget.authorizeserver.entity.ConsoleCommandSender;
 import me.xiaoying.logger.Logger;
 
 import java.io.File;
 
 public class LACore {
     private static final Logger logger = new Logger();
+    private static final CommandSender consoleCommandSender = new ConsoleCommandSender();
 
     private static CommandManager commandManager = null;
 
@@ -36,6 +39,15 @@ public class LACore {
      */
     public static CommandManager getCommandManager() {
         return LACore.commandManager;
+    }
+
+    /**
+     * Get console command sender
+     *
+     * @return ConsoleCommandSender
+     */
+    public static CommandSender getConsoleCommandSender() {
+        return LACore.consoleCommandSender;
     }
 
     public static Logger getLogger() {
