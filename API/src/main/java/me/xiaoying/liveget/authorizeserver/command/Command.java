@@ -1,9 +1,11 @@
 package me.xiaoying.liveget.authorizeserver.command;
 
+import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Command {
+public abstract class Command {
     private final String name;
     private final String description;
     private final String usage;
@@ -58,4 +60,12 @@ public class Command {
     public List<String> getAlias() {
         return this.alias;
     }
+
+    /**
+     * Execute command
+     *
+     * @param sender Who call the command
+     * @param args parameters
+     */
+    public abstract void execute(CommandSender sender, String[] args);
 }
