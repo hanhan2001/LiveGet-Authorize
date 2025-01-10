@@ -13,12 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.util.Locale;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 @SpringBootApplication
 public class LiveGetAuthorizeServer {
-    private static final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(200);
 
     private static FileManager fileManager;
 
@@ -51,9 +48,5 @@ public class LiveGetAuthorizeServer {
             case "SQLITE" -> new SqliteFactory(new File(FileConfig.SETTING_DATA_SQLITE));
             default -> new SqliteFactory(new File("./authorize.db"));
         };
-    }
-
-    public static ScheduledExecutorService getExecutorService() {
-        return LiveGetAuthorizeServer.executorService;
     }
 }
