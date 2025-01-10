@@ -15,13 +15,37 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <jline.version>3.28.0</jline.version>
     </properties>
 
     <dependencies>
+        <!-- API -->
         <dependency>
             <groupId>me.xiaoying.liveget.authorizeserver</groupId>
             <artifactId>API</artifactId>
-            <version>1.0.0</version>
+            <version>${version}</version>
+        </dependency>
+        <!-- JLine -->
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline</artifactId>
+            <version>${jline.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal</artifactId>
+            <version>${jline.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-terminal-jni</artifactId>
+            <version>${jline.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jline</groupId>
+            <artifactId>jline-reader</artifactId>
+            <version>${jline.version}</version>
         </dependency>
     </dependencies>
 </project>
