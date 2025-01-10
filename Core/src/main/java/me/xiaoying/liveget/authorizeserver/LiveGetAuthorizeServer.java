@@ -1,5 +1,6 @@
 package me.xiaoying.liveget.authorizeserver;
 
+import me.xiaoying.liveget.authorizeserver.command.SimpleCommandManager;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.file.FileManager;
 import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
@@ -35,6 +36,9 @@ public class LiveGetAuthorizeServer {
         // file
         LiveGetAuthorizeServer.fileManager = new SimpleFileManager();
         LiveGetAuthorizeServer.fileManager.register(new FileConfig());
+
+        // command manager
+        LACore.setCommandManager(new SimpleCommandManager());
     }
 
     public static SqlFactory getSqlFactory() {
