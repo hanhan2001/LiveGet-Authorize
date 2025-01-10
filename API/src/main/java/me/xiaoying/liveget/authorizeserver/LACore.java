@@ -25,7 +25,7 @@ public class LACore {
      *
      * @param commandManager CommandManager
      */
-    public void setCommandManager(CommandManager commandManager) {
+    public static void setCommandManager(CommandManager commandManager) {
         LACore.commandManager = commandManager;
     }
 
