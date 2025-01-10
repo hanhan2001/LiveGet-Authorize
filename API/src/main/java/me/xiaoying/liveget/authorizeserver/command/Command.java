@@ -68,4 +68,15 @@ public abstract class Command {
      * @param args parameters
      */
     public abstract void execute(CommandSender sender, String[] args);
+
+    /**
+     * Tab executor
+     *
+     * @param sender Who called this method
+     * @param command Command
+     * @param head command's head
+     * @param args command's parameters
+     * @return tab parameters
+     */
+    public abstract List<String> getTabComplete(CommandSender sender, Command command, String head, String[] args);
 }
