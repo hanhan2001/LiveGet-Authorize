@@ -39,7 +39,7 @@ public class LiveGetAuthorizeServer {
         return switch (FileConfig.SETTING_DATA_TYPE.toUpperCase(Locale.ENGLISH)) {
             case "MYSQL" -> new MysqlFactory(FileConfig.SETTING_DATA_MYSQL_HOSTNAME, FileConfig.SETTING_DATA_MYSQL_PORT, FileConfig.SETTING_DATA_MYSQL_DATABASE, FileConfig.SETTING_DATA_MYSQL_USERNAME, FileConfig.SETTING_PASSWORD_PASSWORD);
             case "SQLITE" -> new SqliteFactory(new File(FileConfig.SETTING_DATA_SQLITE));
-            default -> null;
+            default -> new SqliteFactory(new File("./authorize.db"));
         };
     }
 }
