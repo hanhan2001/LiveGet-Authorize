@@ -26,7 +26,9 @@ public class LiveGetAuthorizeServer {
         System.setProperty("server.port", String.valueOf(FileConfig.SERVER_PORT));
 
         SpringApplication springApplication = new SpringApplication(LiveGetAuthorizeServer.class);
+        springApplication.setLogStartupInfo(false);
         springApplication.setBannerMode(Banner.Mode.OFF);
+        springApplication.run();
     }
 
     public static void initialize() {
