@@ -64,7 +64,7 @@ public abstract class Command {
     /**
      * Execute command
      *
-     * @param sender Who call the command
+     * @param sender Who called this command
      * @param args parameters
      */
     public abstract void execute(CommandSender sender, String[] args);
