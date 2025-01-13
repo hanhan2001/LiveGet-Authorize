@@ -24,12 +24,7 @@ public class Terminal implements Listener {
 
     @EventHandler
     public void onTerminalWantLog(TerminalWantLogEvent event) {
-        System.out.println("\r");
-    }
-
-    @EventHandler
-    public void onTerminalLogged(TerminalLogEndEvent event) {
-        System.out.println(this.prompt);
+        LACore.getLogger().print("\r");
     }
 
     public void start() throws IOException {
