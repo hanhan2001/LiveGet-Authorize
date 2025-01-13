@@ -2,6 +2,8 @@ package me.xiaoying.liveget.authorizeserver.command;
 
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 
+import java.util.List;
+
 public interface CommandManager {
     /**
      * Register command
@@ -18,6 +20,13 @@ public interface CommandManager {
      * @return Command
      */
     Command getCommand(String command);
+
+    /**
+     * Get commands
+     *
+     * @return ArrayList
+     */
+    List<Command> getCommands();
 
     /**
      * Perform command

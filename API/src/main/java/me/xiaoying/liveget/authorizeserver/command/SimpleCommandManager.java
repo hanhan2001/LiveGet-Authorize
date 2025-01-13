@@ -35,6 +35,11 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     @Override
+    public List<Command> getCommands() {
+        return new ArrayList<>(this.knownCommands.values());
+    }
+
+    @Override
     public boolean dispatch(CommandSender sender, String command) {
         String[] split = command.split(" ");
         String head = split[0];
