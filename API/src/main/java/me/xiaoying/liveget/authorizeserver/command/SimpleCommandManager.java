@@ -3,6 +3,7 @@ package me.xiaoying.liveget.authorizeserver.command;
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.NamespacedKey;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
 
 import java.util.*;
 
@@ -12,6 +13,11 @@ public class SimpleCommandManager implements CommandManager {
     @Override
     public void registerCommand(String fallbackPrefix, Command command) {
         this.knownCommands.put(new NamespacedKey(fallbackPrefix, command.getName()).toString(), command);
+    }
+
+    @Override
+    public void registerCommand(Plugin plugin, Command command) {
+        this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), command.getName()).toString(), command);
     }
 
     @Override
