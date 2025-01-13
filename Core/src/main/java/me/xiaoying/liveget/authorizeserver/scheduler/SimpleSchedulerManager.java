@@ -1,9 +1,8 @@
 package me.xiaoying.liveget.authorizeserver.scheduler;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
+
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +13,8 @@ public class SimpleSchedulerManager implements ScheduledManager {
     private final Map<Integer, Task> tasks = new HashMap<>();
     private boolean interrupt = false;
     private int id = 0;
+
+    private final Map<Plugin, List<Integer>> pluginTasks = new HashMap<>();
 
     public SimpleSchedulerManager() {
         SimpleSchedulerManager.executorService.scheduleAtFixedRate(() -> {
@@ -48,6 +49,84 @@ public class SimpleSchedulerManager implements ScheduledManager {
             return;
 
         t.cancel();
+    }
+
+    @Override
+    public void cancelTask(Plugin plugin) {
+        this.pluginTasks.get(plugin).forEach(this::cancelTask);
+        this.pluginTasks.remove(plugin);
+    }
+
+    @Override
+    public int scheduleSyncDelayedTask(Plugin plugin, Runnable runnable) {
+        Task task = new Task(this.id++, Task.TaskType.SYNC_RUN, runnable, 0, 0);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
+    }
+
+    @Override
+    public int scheduleSyncDelayedTask(Plugin plugin, Runnable runnable, long delay) {
+        Task task = new Task(this.id++, Task.TaskType.SYNC_RUN, runnable, delay, 0);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
+    }
+
+    @Override
+    public int scheduleSyncRepeatingTask(Plugin plugin, Runnable runnable, long delay, long period) {
+        Task task = new Task(this.id++, Task.TaskType.SYNC_REPEAT, runnable, delay, period);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
+    }
+
+    @Override
+    public int scheduleAsyncDelayedTask(Plugin plugin, Runnable runnable) {
+        Task task = new Task(this.id++, Task.TaskType.ASYNC_RUN, runnable, 0, 0);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
+    }
+
+    @Override
+    public int scheduleAsyncDelayedTask(Plugin plugin, Runnable runnable, long delay) {
+        Task task = new Task(this.id++, Task.TaskType.ASYNC_RUN, runnable, delay, 0);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
+    }
+
+    @Override
+    public int scheduleAsyncRepeatingTask(Plugin plugin, Runnable runnable, long delay, long period) {
+        Task task = new Task(this.id++, Task.TaskType.ASYNC_REPEAT, runnable, delay, period);
+
+        List<Integer> list;
+        if ((list = this.pluginTasks.get(plugin)) == null)
+            list = new ArrayList<>();
+
+        this.pluginTasks.put(plugin, list);
+        return task.getId();
     }
 
     public int scheduleSyncDelayedTask(Runnable runnable, long delay) {
