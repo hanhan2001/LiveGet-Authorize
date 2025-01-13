@@ -64,11 +64,17 @@ public class Terminal implements Listener {
     private Completer getCompleter(String commandHead, String[] args) {
         Command command = LACore.getCommandManager().getCommand(commandHead);
 
-        if (command == null)
+        List<String> list = new ArrayList<>();
+
+        if (commandHead == null || commandHead.isEmpty())
+            LACore.getCommandManager().getCommands().forEach(c -> list.add(c.getName()));
+        else if (command == null)
             return null;
 
+        list.addAll(command.getTabComplete(LACore.getConsoleCommandSender(), command, commandHead, args));
+
         List<Completers.TreeCompleter.Node> nodes = new ArrayList<>();
-        command.getTabComplete(LACore.getConsoleCommandSender(), command, commandHead, args).forEach(string -> nodes.add(Completers.TreeCompleter.node(string)));
+        list.forEach(string -> nodes.add(Completers.TreeCompleter.node(string)));
         return new Completers.TreeCompleter(nodes);
     }
 }
