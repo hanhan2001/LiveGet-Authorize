@@ -107,9 +107,9 @@ public class AuthorizeServer implements Server {
 
         // commands
         LACore.getLogger().info("Registering default commands...");
-        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "&c/stop"));
-        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "&c/help", Collections.singletonList("?")));
-        LACore.getCommandManager().registerCommand("authorize", new PluginCommand("plugins", "A default command of server", "&c/plugins or /pl", Collections.singletonList("pl")));
+        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
+        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
+        LACore.getCommandManager().registerCommand("authorize", new PluginCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
 
         // plugin manager
         this.pluginManager = new SimplePluginManager(this);
