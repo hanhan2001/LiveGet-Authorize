@@ -113,7 +113,9 @@ public class AuthorizeServer implements Server {
 
         // plugin manager
         this.pluginManager = new SimplePluginManager(this);
-        this.pluginManager.loadPlugins(new File(LACore.getDataFolder(), "plugins"));
+        File plugins = new File(LACore.getDataFolder(), "plugins");
+        if (!plugins.exists()) plugins.mkdirs();
+        this.pluginManager.loadPlugins(plugins);
 
         // terminal
         this.terminal = new Terminal();
