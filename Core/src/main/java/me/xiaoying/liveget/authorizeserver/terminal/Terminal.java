@@ -69,7 +69,8 @@ public class Terminal implements Listener {
         else if (command == null)
             return null;
 
-        list.addAll(command.getTabComplete(LACore.getConsoleCommandSender(), command, commandHead, args));
+        if (command != null)
+            list.addAll(command.getTabComplete(LACore.getConsoleCommandSender(), command, commandHead, args));
 
         List<Completers.TreeCompleter.Node> nodes = new ArrayList<>();
         list.forEach(string -> nodes.add(Completers.TreeCompleter.node(string)));
