@@ -1,5 +1,6 @@
 package me.xiaoying.liveget.authorizeserver;
 
+import me.xiaoying.liveget.authorizeserver.event.server.ServerStartedEvent;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.sql.MysqlFactory;
 import me.xiaoying.sql.SqlFactory;
@@ -14,6 +15,7 @@ public class LiveGetAuthorizeServer {
     public static void main(String[] args) {
         LACore.setServer(new AuthorizeServer());
         LACore.getServer().start();
+        LACore.getPluginManager().callEvent(new ServerStartedEvent(LACore.getServer()));
     }
 
     public static SqlFactory getSqlFactory() {
