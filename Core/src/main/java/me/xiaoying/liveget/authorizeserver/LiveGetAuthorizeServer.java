@@ -30,6 +30,7 @@ public class LiveGetAuthorizeServer {
         // initialize
         LACore.getLogger().info("Initialize...");
         LiveGetAuthorizeServer.initialize();
+        LACore.getLogger().info("Starting server...");
 
         System.setProperty("server.address", FileConfig.SERVER_HOST);
         System.setProperty("server.port", String.valueOf(FileConfig.SERVER_PORT));
@@ -45,17 +46,18 @@ public class LiveGetAuthorizeServer {
 
     public static void initialize() {
         // file
+        LACore.getLogger().info("Loading file...");
         LiveGetAuthorizeServer.fileManager = new SimpleFileManager();
         LiveGetAuthorizeServer.fileManager.register(new FileConfig());
         LiveGetAuthorizeServer.fileManager.loads();
 
-        // command manager
+        // managers
+        LACore.getLogger().info("Setting default managers...");
+        LACore.setScheduledManager(new SimpleSchedulerManager());
         LACore.setCommandManager(new SimpleCommandManager());
 
-        // scheduler manager
-        LACore.setScheduledManager(new SimpleSchedulerManager());
-
         // commands
+        LACore.getLogger().info("Registering default commands...");
         LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
         LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
 
