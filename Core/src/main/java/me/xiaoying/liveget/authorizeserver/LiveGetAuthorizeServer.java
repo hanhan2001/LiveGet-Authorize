@@ -1,76 +1,19 @@
 package me.xiaoying.liveget.authorizeserver;
 
-import me.xiaoying.liveget.authorizeserver.command.HelpCommand;
-import me.xiaoying.liveget.authorizeserver.command.SimpleCommandManager;
-import me.xiaoying.liveget.authorizeserver.command.StopCommand;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
-import me.xiaoying.liveget.authorizeserver.file.FileManager;
-import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
-import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
-import me.xiaoying.liveget.authorizeserver.terminal.Terminal;
-import me.xiaoying.logger.event.EventHandle;
 import me.xiaoying.sql.MysqlFactory;
 import me.xiaoying.sql.SqlFactory;
 import me.xiaoying.sql.SqliteFactory;
-import org.springframework.boot.Banner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.Locale;
 
 @SpringBootApplication
 public class LiveGetAuthorizeServer {
-    private static FileManager fileManager;
-    private static Terminal terminal;
-
     public static void main(String[] args) {
-        // initialize
-        LACore.getLogger().info("Initialize...");
-        LiveGetAuthorizeServer.initialize();
-        LACore.getLogger().info("Starting server...");
-
-        System.setProperty("server.address", FileConfig.SERVER_HOST);
-        System.setProperty("server.port", String.valueOf(FileConfig.SERVER_PORT));
-
-        SpringApplication springApplication = new SpringApplication(LiveGetAuthorizeServer.class);
-        springApplication.setLogStartupInfo(false);
-        springApplication.setBannerMode(Banner.Mode.OFF);
-        springApplication.run();
-
-        LACore.getLogger().info("Server is listening {} - {}", FileConfig.SERVER_HOST, FileConfig.SERVER_PORT);
-
-        // terminal
-        try { LiveGetAuthorizeServer.terminal.start(); } catch (IOException e) { throw new RuntimeException(e); }
-    }
-
-    public static void initialize() {
-        // file
-        LACore.getLogger().info("Loading file...");
-        LiveGetAuthorizeServer.fileManager = new SimpleFileManager();
-        LiveGetAuthorizeServer.fileManager.register(new FileConfig());
-        LiveGetAuthorizeServer.fileManager.loads();
-
-        // managers
-        LACore.getLogger().info("Setting default managers...");
-        LACore.setScheduledManager(new SimpleSchedulerManager());
-        LACore.setCommandManager(new SimpleCommandManager());
-
-        // commands
-        LACore.getLogger().info("Registering default commands...");
-        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
-        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
-
-        // terminal
-        LiveGetAuthorizeServer.terminal = new Terminal();
-        EventHandle.registerEvent(LiveGetAuthorizeServer.terminal);
-    }
-
-    // unInitialize
-    public static void unInitialize() {
-
+        LACore.setServer(new AuthorizeServer());
+        LACore.getServer().start();
     }
 
     public static SqlFactory getSqlFactory() {
