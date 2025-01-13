@@ -3,10 +3,8 @@ package me.xiaoying.liveget.authorizeserver.terminal;
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.command.Command;
 import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
-import me.xiaoying.logger.LoggerFactory;
 import me.xiaoying.logger.event.EventHandler;
 import me.xiaoying.logger.event.Listener;
-import me.xiaoying.logger.event.terminal.TerminalLogEndEvent;
 import me.xiaoying.logger.event.terminal.TerminalWantLogEvent;
 import org.jline.builtins.Completers;
 import org.jline.reader.Completer;
@@ -29,9 +27,9 @@ public class Terminal implements Listener {
 
     public void start() throws IOException {
         Scanner scanner = new Scanner(System.in);
-
         org.jline.terminal.Terminal terminal = TerminalBuilder.builder().system(true).build();
 
+        LACore.getLogger().info("For help, type \"help\" or \"?\"");
         SimpleSchedulerManager scheduledManager = (SimpleSchedulerManager) LACore.getScheduledManager();
         scheduledManager.scheduleAsyncRepeatingTask(() -> {
             LACore.getLogger().print(this.prompt);
