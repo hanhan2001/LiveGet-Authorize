@@ -40,6 +40,8 @@ public class LiveGetAuthorizeServer {
         springApplication.setBannerMode(Banner.Mode.OFF);
         springApplication.run();
 
+        LACore.getLogger().info("Server is running in {} - {}", FileConfig.SERVER_HOST, FileConfig.SERVER_PORT);
+
         // terminal
         try { LiveGetAuthorizeServer.terminal.start(); } catch (IOException e) { throw new RuntimeException(e); }
     }
