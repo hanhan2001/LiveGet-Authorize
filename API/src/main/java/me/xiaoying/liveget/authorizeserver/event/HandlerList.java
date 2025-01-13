@@ -62,11 +62,14 @@ public class HandlerList {
         boolean changed = false;
 
         for (List<RegisteredListener> value : this.handlerslots.values()) {
-            for (ListIterator<RegisteredListener> i = value.listIterator(); i.hasNext(); ) {
-                if (!i.next().getPlugin().equals(plugin))
+            ListIterator<RegisteredListener> iterator = value.listIterator();
+
+            RegisteredListener registeredListener;
+            while (iterator.hasNext() && (registeredListener = iterator.next()) != null) {
+                if (registeredListener.getPlugin() == null || !registeredListener.getPlugin().equals(plugin))
                     continue;
 
-                i.remove();
+                iterator.remove();
                 changed = true;
             }
         }
@@ -129,12 +132,12 @@ public class HandlerList {
 
     public static List<RegisteredListener> getRegisteredListeners(Plugin plugin) {
         List<RegisteredListener> listeners = new ArrayList<>();
-        synchronized (allLists) {
-            for (HandlerList allList : allLists) {
+        synchronized (HandlerList.allLists) {
+            for (HandlerList allList : HandlerList.allLists) {
                 synchronized (allList) {
                     for (List<RegisteredListener> value : allList.handlerslots.values()) {
                         for (RegisteredListener registeredListener : value) {
-                            if (!registeredListener.getPlugin().equals(plugin))
+                            if (registeredListener.getPlugin() == null || !registeredListener.getPlugin().equals(plugin))
                                 continue;
 
                             listeners.add(registeredListener);

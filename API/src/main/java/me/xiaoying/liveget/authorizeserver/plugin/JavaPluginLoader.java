@@ -169,7 +169,7 @@ public class JavaPluginLoader implements PluginLoader {
         Iterator<RegisteredListener> iterator = this.registeredListeners.iterator();
         RegisteredListener registeredListener;
         while (iterator.hasNext() && (registeredListener = iterator.next()) != null) {
-            if (registeredListener.getPlugin() != plugin)
+            if (registeredListener.getPlugin() == null || registeredListener.getPlugin() != plugin)
                 continue;
 
             iterator.remove();

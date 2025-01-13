@@ -164,7 +164,7 @@ public class SimplePluginManager implements PluginManager {
             return;
 
         for (RegisteredListener registration : listeners) {
-            if (!registration.getPlugin().isEnabled())
+            if (registration.getPlugin() == null || !registration.getPlugin().isEnabled())
                 continue;
 
             try {
@@ -195,10 +195,27 @@ public class SimplePluginManager implements PluginManager {
         Preconditions.checkArgument(priority != null, "Priority cannot be null");
         Preconditions.checkArgument(executor != null, "Executor cannot be null");
         Preconditions.checkArgument(plugin != null, "Plugin cannot be null");
+
         if (!plugin.isEnabled())
             throw new IllegalPluginAccessException("Plugin attempted to register " + event + " while not enabled");
 
         this.getEventListeners(event).register(new RegisteredListener(listener, executor, priority, plugin));
+    }
+
+    /**
+     * Register listener by server
+     *
+     * @param event Event
+     * @param listener Listener
+     * @param priority Priority
+     * @param executor EventExecutor
+     */
+    public void registerEvent(Class<? extends Event> event, Listener listener, EventPriority priority, EventExecutor executor) {
+        Preconditions.checkArgument(listener != null, "Listener cannot be null");
+        Preconditions.checkArgument(priority != null, "Priority cannot be null");
+        Preconditions.checkArgument(executor != null, "Executor cannot be null");
+
+        this.getEventListeners(event).register(new RegisteredListener(listener, executor, priority, null));
     }
 
     private HandlerList getEventListeners(Class<? extends Event> type) {
