@@ -21,6 +21,8 @@ public class PluginCommand extends Command {
             return;
         }
 
+        LACore.getLogger().println("&6Plugin numbers about: {}", LACore.getPluginManager().getPlugins().length);
+
         for (Plugin plugin : LACore.getPluginManager().getPlugins()) {
             StringBuilder author = new StringBuilder();
             for (int i = 0; i < plugin.getDescription().getAuthors().length; i++) {
@@ -32,7 +34,8 @@ public class PluginCommand extends Command {
                 author.append(", ");
             }
 
-            LACore.getLogger().info("|- {}({}) - {}\n   └─ by {}", plugin.getDescription().getName(), plugin.getDescription().getVersion(), plugin.getDescription().getDescription(), author.toString());
+            String nameColor = plugin.isEnabled() ? "&a" : "&c";
+            LACore.getLogger().info("&8|- {}&f({}) &8- {}\n   &8└─ by {}", nameColor + plugin.getDescription().getName(), plugin.getDescription().getVersion(), plugin.getDescription().getDescription(), author.toString());
         }
     }
 
