@@ -176,7 +176,7 @@ public class SimpleSchedulerManager implements ScheduledManager {
 
             new Thread(() -> {
                 try {
-                    wait(this.delay);
+                    TimeUnit.MICROSECONDS.sleep(this.delay * 50L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
