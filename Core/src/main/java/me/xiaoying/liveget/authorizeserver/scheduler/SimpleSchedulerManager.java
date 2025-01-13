@@ -62,7 +62,6 @@ public class SimpleSchedulerManager implements ScheduledManager {
         return task.getId();
     }
 
-
     public int scheduleAsyncDelayedTask(Runnable runnable) {
         Task task = new Task(this.id++, Task.TaskType.ASYNC_RUN, runnable, 0, 0);
         this.tasks.put(task.getId(), task);
