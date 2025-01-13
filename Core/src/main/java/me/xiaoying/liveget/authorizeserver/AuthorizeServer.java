@@ -1,12 +1,10 @@
 package me.xiaoying.liveget.authorizeserver;
 
-import me.xiaoying.liveget.authorizeserver.command.CommandManager;
-import me.xiaoying.liveget.authorizeserver.command.HelpCommand;
-import me.xiaoying.liveget.authorizeserver.command.SimpleCommandManager;
-import me.xiaoying.liveget.authorizeserver.command.StopCommand;
+import me.xiaoying.liveget.authorizeserver.command.*;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.entity.ConsoleCommandSender;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
+import me.xiaoying.liveget.authorizeserver.file.FileLanguage;
 import me.xiaoying.liveget.authorizeserver.file.FileManager;
 import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
 import me.xiaoying.liveget.authorizeserver.plugin.PluginManager;
@@ -99,6 +97,7 @@ public class AuthorizeServer implements Server {
         LACore.getLogger().info("Loading file...");
         this.fileManager = new SimpleFileManager();
         this.fileManager.register(new FileConfig());
+        this.fileManager.register(new FileLanguage());
         this.fileManager.loads();
 
         // managers
@@ -108,8 +107,9 @@ public class AuthorizeServer implements Server {
 
         // commands
         LACore.getLogger().info("Registering default commands...");
-        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
-        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
+        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "&c/stop"));
+        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "&c/help", Collections.singletonList("?")));
+        LACore.getCommandManager().registerCommand("authorize", new PluginCommand("plugins", "A default command of server", "&c/plugins or /pl", Collections.singletonList("pl")));
 
         // plugin manager
         this.pluginManager = new SimplePluginManager(this);

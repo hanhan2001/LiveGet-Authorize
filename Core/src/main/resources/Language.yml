@@ -1,0 +1,4 @@
+#命令词条
+Command:
+  #缺少权限
+  MissingPermission: "&c没有权限这么做！"
