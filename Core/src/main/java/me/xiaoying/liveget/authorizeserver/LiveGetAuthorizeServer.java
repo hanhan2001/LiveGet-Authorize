@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.HelpCommand;
 import me.xiaoying.liveget.authorizeserver.command.SimpleCommandManager;
+import me.xiaoying.liveget.authorizeserver.command.StopCommand;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.file.FileManager;
 import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
@@ -17,7 +18,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -56,6 +56,7 @@ public class LiveGetAuthorizeServer {
         LACore.setScheduledManager(new SimpleSchedulerManager());
 
         // commands
+        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
         LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
 
         // terminal
