@@ -64,6 +64,11 @@ public class LiveGetAuthorizeServer {
         EventHandle.registerEvent(LiveGetAuthorizeServer.terminal);
     }
 
+    // unInitialize
+    public static void unInitialize() {
+
+    }
+
     public static SqlFactory getSqlFactory() {
         return switch (FileConfig.SETTING_DATA_TYPE.toUpperCase(Locale.ENGLISH)) {
             case "MYSQL" -> new MysqlFactory(FileConfig.SETTING_DATA_MYSQL_HOSTNAME, FileConfig.SETTING_DATA_MYSQL_PORT, FileConfig.SETTING_DATA_MYSQL_DATABASE, FileConfig.SETTING_DATA_MYSQL_USERNAME, FileConfig.SETTING_PASSWORD_PASSWORD);
