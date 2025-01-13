@@ -4,6 +4,7 @@ import me.xiaoying.liveget.authorizeserver.command.SimpleCommandManager;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.file.FileManager;
 import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
+import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
 import me.xiaoying.sql.MysqlFactory;
 import me.xiaoying.sql.SqlFactory;
 import me.xiaoying.sql.SqliteFactory;
@@ -37,9 +38,13 @@ public class LiveGetAuthorizeServer {
         // file
         LiveGetAuthorizeServer.fileManager = new SimpleFileManager();
         LiveGetAuthorizeServer.fileManager.register(new FileConfig());
+        LiveGetAuthorizeServer.fileManager.loads();
 
         // command manager
         LACore.setCommandManager(new SimpleCommandManager());
+
+        // scheduler manager
+        LACore.setScheduledManager(new SimpleSchedulerManager());
     }
 
     public static SqlFactory getSqlFactory() {
