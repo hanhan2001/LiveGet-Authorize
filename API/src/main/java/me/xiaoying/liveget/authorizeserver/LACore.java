@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.CommandManager;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+import me.xiaoying.liveget.authorizeserver.plugin.PluginManager;
 import me.xiaoying.liveget.authorizeserver.scheduler.ScheduledManager;
 import me.xiaoying.liveget.authorizeserver.server.Server;
 import me.xiaoying.logger.Logger;
@@ -59,6 +60,15 @@ public class LACore {
      */
     public static ScheduledManager getScheduledManager() {
         return LACore.server.getScheduledManager();
+    }
+
+    /**
+     * Get plugin manager of server
+     *
+     * @return PluginManager
+     */
+    public static PluginManager getPluginManager() {
+        return LACore.server.getPluginManager();
     }
 
     /**
