@@ -148,6 +148,7 @@ public class SimplePluginManager implements PluginManager {
 
         plugin.getPluginloader().disablePlugin(plugin);
         HandlerList.unregisterAll(plugin);
+        LACore.getScheduledManager().cancelTask(plugin);
     }
 
     @Override
