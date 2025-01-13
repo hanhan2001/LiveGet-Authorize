@@ -13,7 +13,7 @@ public class HelpCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        LACore.getCommandManager().getCommands().forEach(command -> LACore.getLogger().println("|- {} -> {}", command.getName(), command.getDescription()));
+        LACore.getCommandManager().getCommands().forEach(command -> LACore.getLogger().println("|- {} -> {}\n   └─ Usage: {}", command.getName(), command.getDescription(), command.getUsage()));
     }
 
     @Override
