@@ -59,7 +59,6 @@ public class SimpleUserManager implements UserManager {
             LACore.getLogger().print("PhoneNumber: ");
             phoneNumber = scanner.nextLong();
 
-
             this.user_count = 1;
             this.createUser(email, email, password, phoneNumber, "admin");
 
