@@ -8,6 +8,7 @@ import me.xiaoying.liveget.authorizeserver.LiveGetAuthorizeServer;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.permission.Permission;
 import me.xiaoying.liveget.authorizeserver.utils.DateUtil;
+import me.xiaoying.liveget.authorizeserver.utils.EncryptUtil;
 import me.xiaoying.sql.entity.Column;
 import me.xiaoying.sql.entity.Record;
 import me.xiaoying.sql.entity.Table;
@@ -138,6 +139,18 @@ public class SimpleUserManager implements UserManager {
 
     @Override
     public User createUser(String name, String account, String password, long phoneNumber, String email, String group) {
+        switch (FileConfig.SETTING_PASSWORD_ENCRYPT.toUpperCase(Locale.ENGLISH)) {
+            case "BASE64":
+                password = EncryptUtil.base64Encrypt(password);
+                break;
+            case "MD5":
+                password = EncryptUtil.md5Encrypt(password);
+                break;
+            default:
+            case "SHA256":
+                password = EncryptUtil.SHA256Encrypt(password);
+        }
+
         ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, account, password, phoneNumber, email, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
 
         JsonArray jsonArray = new JsonArray();
