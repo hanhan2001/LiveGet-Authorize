@@ -13,6 +13,8 @@ import me.xiaoying.liveget.authorizeserver.scheduler.ScheduledManager;
 import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
 import me.xiaoying.liveget.authorizeserver.server.Server;
 import me.xiaoying.liveget.authorizeserver.terminal.Terminal;
+import me.xiaoying.liveget.authorizeserver.user.SimpleUserManager;
+import me.xiaoying.liveget.authorizeserver.user.UserManager;
 import me.xiaoying.logger.event.EventHandle;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -27,6 +29,7 @@ public class AuthorizeServer implements Server {
     private FileManager fileManager;
     private Terminal terminal;
 
+    private UserManager userManager;
     private PluginManager pluginManager;
     private CommandManager commandManager;
     private ScheduledManager scheduledManager;
@@ -113,6 +116,9 @@ public class AuthorizeServer implements Server {
         LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
         LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
         LACore.getCommandManager().registerCommand("authorize", new PluginCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
+
+        // user manager
+        this.userManager = new SimpleUserManager();
 
         // plugin manager
         this.pluginManager = new SimplePluginManager(this);
