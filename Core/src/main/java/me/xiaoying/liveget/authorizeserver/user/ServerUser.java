@@ -1,6 +1,12 @@
 package me.xiaoying.liveget.authorizeserver.user;
 
+import com.google.gson.JsonArray;
+import me.xiaoying.liveget.authorizeserver.LiveGetAuthorizeServer;
+import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.permission.Permission;
+import me.xiaoying.liveget.authorizeserver.utils.DateUtil;
+import me.xiaoying.sql.sentence.Condition;
+import me.xiaoying.sql.sentence.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -274,5 +280,27 @@ public class ServerUser implements User {
      */
     public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
+    }
+
+    /**
+     * Save information to database
+     */
+    public void save() {
+        JsonArray permissions = new JsonArray();
+        this.getPermissions().forEach(permission -> permissions.add(permission.toString()));
+
+        Update update = new Update(FileConfig.SETTING_TABLE_USER);
+        update.set("name", this.getName());
+        update.set("account", this.getAccount());
+        update.set("password", this.getPassword());
+        update.set("phone_number", this.getPhoneNumber());
+        update.set("email", this.getEmail());
+        update.set("group", this.getGroup());
+        update.set("permissions", permissions.getAsString());
+        update.set("ip", this.getIP());
+        update.set("register_time", DateUtil.getDate(this.getRegisterTime(), FileConfig.SETTING_DATEFORMAT));
+        update.set("last_login_time", DateUtil.getDate(this.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT));
+        update.set("photo_path", "");
+        LiveGetAuthorizeServer.getSqlFactory().run(update.condition(new Condition("uuid", this.getUUID(), Condition.Type.EQUAL)));
     }
 }
