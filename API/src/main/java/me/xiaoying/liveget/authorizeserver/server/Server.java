@@ -4,6 +4,7 @@ import me.xiaoying.liveget.authorizeserver.command.CommandManager;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.plugin.PluginManager;
 import me.xiaoying.liveget.authorizeserver.scheduler.ScheduledManager;
+import me.xiaoying.liveget.authorizeserver.user.UserManager;
 
 public interface Server {
     String getName();
@@ -11,6 +12,8 @@ public interface Server {
     void start();
 
     void stop();
+
+    UserManager getUserManager();
 
     ScheduledManager getScheduledManager();
 

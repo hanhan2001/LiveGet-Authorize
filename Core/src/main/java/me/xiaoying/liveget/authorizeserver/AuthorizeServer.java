@@ -75,7 +75,12 @@ public class AuthorizeServer implements Server {
     @Override
     public void stop() {
         this.unInitialize();
-        System.exit(1);
+        System.exit(0);
+    }
+
+    @Override
+    public UserManager getUserManager() {
+        return this.userManager;
     }
 
     @Override
