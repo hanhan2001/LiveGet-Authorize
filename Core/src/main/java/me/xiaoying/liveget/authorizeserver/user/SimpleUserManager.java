@@ -43,7 +43,7 @@ public class SimpleUserManager implements UserManager {
 
         // Determine whither the table if empty.
         List<Table> select_tables = LiveGetAuthorizeServer.getSqlFactory().run(new Select(Collections.singletonList("uuid"), FileConfig.SETTING_TABLE_USER));
-        if (select_tables.isEmpty()) {
+        if (select_tables.get(0).getRecords().isEmpty()) {
             LACore.getLogger().info("User list is empty, need to create a default admin account.");
 
             Scanner scanner = new Scanner(System.in);
@@ -141,7 +141,10 @@ public class SimpleUserManager implements UserManager {
         ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, account, password, phoneNumber, email, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
 
         JsonArray jsonArray = new JsonArray();
-        user.getPermissions().forEach(permission -> jsonArray.add(permission.toString()));
+        if (user.getPermissions().isEmpty())
+            jsonArray.add("");
+        else
+            user.getPermissions().forEach(permission -> jsonArray.add(permission.toString()));
 
         Insert insert = new Insert(FileConfig.SETTING_TABLE_USER);
         insert.insert(user.getUUID(), user.getName(), user.getAccount(), user.getPassword(), user.getPhoneNumber(), user.getEmail(), user.getGroup(), jsonArray.getAsString(), user.getIP(), DateUtil.getDate(user.getRegisterTime(), FileConfig.SETTING_DATEFORMAT), DateUtil.getDate(user.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT), "");

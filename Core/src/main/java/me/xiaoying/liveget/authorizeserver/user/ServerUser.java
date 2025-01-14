@@ -287,7 +287,10 @@ public class ServerUser implements User {
      */
     public void save() {
         JsonArray permissions = new JsonArray();
-        this.getPermissions().forEach(permission -> permissions.add(permission.toString()));
+        if (this.getPermissions().isEmpty())
+            permissions.add("");
+        else
+            this.getPermissions().forEach(permission -> permissions.add(permission.toString()));
 
         Update update = new Update(FileConfig.SETTING_TABLE_USER);
         update.set("name", this.getName());
