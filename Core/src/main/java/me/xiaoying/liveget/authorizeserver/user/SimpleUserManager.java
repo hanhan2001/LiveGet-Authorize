@@ -148,6 +148,7 @@ public class SimpleUserManager implements UserManager {
 
         Insert insert = new Insert(FileConfig.SETTING_TABLE_USER);
         insert.insert(user.getUUID(), user.getName(), user.getAccount(), user.getPassword(), user.getPhoneNumber(), user.getEmail(), user.getGroup(), jsonArray.getAsString(), user.getIP(), DateUtil.getDate(user.getRegisterTime(), FileConfig.SETTING_DATEFORMAT), DateUtil.getDate(user.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT), "");
+        LiveGetAuthorizeServer.getSqlFactory().run(insert);
         this.recordUser(user);
         return user;
     }

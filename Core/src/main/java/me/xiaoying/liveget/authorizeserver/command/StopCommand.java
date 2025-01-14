@@ -1,6 +1,5 @@
 package me.xiaoying.liveget.authorizeserver.command;
 
-import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 
 import java.util.Collections;
@@ -13,7 +12,7 @@ public class StopCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        LACore.getServer().stop();
+        System.exit(0);
     }
 
     @Override
