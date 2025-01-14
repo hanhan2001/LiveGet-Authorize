@@ -71,7 +71,7 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     private String matchCommand(String command) {
-        if (command.contains(":"))
+        if (command == null || command.contains(":"))
             return command;
 
         String prefix = null;
