@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver.terminal;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.command.Command;
+import me.xiaoying.liveget.authorizeserver.command.CommandExecutor;
 import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
 import me.xiaoying.logger.event.EventHandler;
 import me.xiaoying.logger.event.Listener;
@@ -44,14 +45,14 @@ public class Terminal implements Listener {
             if (split.length > 1)
                 args = new ArrayList<>(Arrays.asList(split).subList(1, split.length)).toArray(new String[0]);
 
-            Command command = LACore.getCommandManager().getCommand(head);
+            CommandExecutor command = LACore.getCommandManager().getCommand(head);
             if (command == null) {
                 LACore.getLogger().info("Unknown command. Type \"/help\" for help.");
                 return;
             }
 
             try {
-                command.execute(LACore.getConsoleCommandSender(), args);
+                command.onCommand(LACore.getConsoleCommandSender(), (Command) command, head, args);
             } catch (Exception e) {
                 LACore.getLogger().warn(e.getMessage());
             }
@@ -59,17 +60,17 @@ public class Terminal implements Listener {
     }
 
     private Completer getCompleter(String commandHead, String[] args) {
-        Command command = LACore.getCommandManager().getCommand(commandHead);
+        CommandExecutor command = LACore.getCommandManager().getCommand(commandHead);
 
         List<String> list = new ArrayList<>();
 
         if (commandHead == null || commandHead.isEmpty())
-            LACore.getCommandManager().getCommands().forEach(c -> list.add(c.getName()));
+            LACore.getCommandManager().getCommands().forEach(c -> list.add(((Command)c).getName()));
         else if (command == null)
             return null;
 
         if (command != null)
-            list.addAll(command.getTabComplete(LACore.getConsoleCommandSender(), command, commandHead, args));
+            list.addAll(command.onTabComplete(LACore.getConsoleCommandSender(), (Command) command, commandHead, args));
 
         List<Completers.TreeCompleter.Node> nodes = new ArrayList<>();
         list.forEach(string -> nodes.add(Completers.TreeCompleter.node(string)));

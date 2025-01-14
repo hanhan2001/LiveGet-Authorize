@@ -5,7 +5,7 @@ import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Command {
+public abstract class Command implements CommandExecutor {
     private final String name;
     private final String description;
     private final String usage;
@@ -66,8 +66,10 @@ public abstract class Command {
      *
      * @param sender Who called this command
      * @param args parameters
+     * @return result
      */
-    public abstract void execute(CommandSender sender, String[] args);
+    @Override
+    public abstract boolean onCommand(CommandSender sender, Command command, String head, String[] args);
 
     /**
      * Tab executor
@@ -78,5 +80,6 @@ public abstract class Command {
      * @param args command's parameters
      * @return tab parameters
      */
-    public abstract List<String> getTabComplete(CommandSender sender, Command command, String head, String[] args);
+    @Override
+    public abstract List<String> onTabComplete(CommandSender sender, Command command, String head, String[] args);
 }

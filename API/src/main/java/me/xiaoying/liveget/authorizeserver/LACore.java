@@ -77,7 +77,7 @@ public class LACore {
      * @return ConsoleCommandSender
      */
     public static CommandSender getConsoleCommandSender() {
-        return LACore.getServer().getConsoleCommandSender();
+        return LACore.getServer().getConsoleSender();
     }
 
     public static Logger getLogger() {

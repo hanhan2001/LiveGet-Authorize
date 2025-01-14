@@ -12,13 +12,14 @@ public class HelpCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String head, String[] args) {
         LACore.getLogger().println("&6Command numbers about: {}", LACore.getCommandManager().getCommands().size());
-        LACore.getCommandManager().getCommands().forEach(command -> LACore.getLogger().println("&8|- &e{} &8->&f {}\n   &8└─ Usage: &7{}", command.getName(), command.getDescription(), command.getUsage()));
+        LACore.getCommandManager().getCommands().forEach(cmd -> LACore.getLogger().println("&8|- &e{} &8->&f {}\n   &8└─ Usage: &7{}", command.getName(), command.getDescription(), command.getUsage()));
+        return true;
     }
 
     @Override
-    public List<String> getTabComplete(CommandSender sender, Command command, String head, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String head, String[] args) {
         return Collections.emptyList();
     }
 }

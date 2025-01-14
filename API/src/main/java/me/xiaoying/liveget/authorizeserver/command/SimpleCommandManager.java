@@ -8,30 +8,30 @@ import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
 import java.util.*;
 
 public class SimpleCommandManager implements CommandManager {
-    private final Map<String, Command> knownCommands = new HashMap<>();
+    private final Map<String, CommandExecutor> knownCommands = new HashMap<>();
 
     @Override
-    public void registerCommand(String fallbackPrefix, Command command) {
-        this.knownCommands.put(new NamespacedKey(fallbackPrefix, command.getName()).toString(), command);
+    public void registerCommand(String fallbackPrefix, CommandExecutor command) {
+        this.knownCommands.put(new NamespacedKey(fallbackPrefix, ((Command) command).getName()).toString(), command);
     }
 
     @Override
-    public void registerCommand(Plugin plugin, Command command) {
-        this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), command.getName()).toString(), command);
+    public void registerCommand(Plugin plugin, CommandExecutor command) {
+        this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), ((Command) command).getName()).toString(), command);
     }
 
     @Override
-    public Command getCommand(String command) {
+    public CommandExecutor getCommand(String command) {
         String origin = command;
 
         command = this.matchCommand(command);
 
         Command cmd;
-        if ((cmd = this.knownCommands.get(command)) != null)
+        if ((cmd = (Command) this.knownCommands.get(command)) != null)
             return cmd;
 
         for (String s : this.knownCommands.keySet()) {
-            if (!this.knownCommands.get(s).getAlias().contains(origin))
+            if (!((Command) this.knownCommands.get(s)).getAlias().contains(origin))
                 continue;
 
             return this.knownCommands.get(s);
@@ -41,7 +41,7 @@ public class SimpleCommandManager implements CommandManager {
     }
 
     @Override
-    public List<Command> getCommands() {
+    public List<CommandExecutor> getCommands() {
         return new ArrayList<>(this.knownCommands.values());
     }
 
@@ -51,7 +51,7 @@ public class SimpleCommandManager implements CommandManager {
         String head = split[0];
 
         head = this.matchCommand(head);
-        Command cmd = this.getCommand(head);
+        Command cmd = (Command) this.getCommand(head);
 
         if (cmd == null)
             return false;
@@ -61,7 +61,7 @@ public class SimpleCommandManager implements CommandManager {
             parameters = new ArrayList<>(Arrays.asList(split)).subList(1, split.length).toArray(new String[0]);
 
         try {
-            cmd.execute(sender, parameters);
+            cmd.onCommand(sender, cmd, head, parameters);
             return true;
         } catch (Exception e) {
             LACore.getLogger().error(e.getMessage());

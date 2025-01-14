@@ -2,7 +2,7 @@ package me.xiaoying.liveget.authorizeserver.command;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
-import me.xiaoying.liveget.authorizeserver.entity.ConsoleCommandSender;
+import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
 import me.xiaoying.liveget.authorizeserver.file.FileLanguage;
 import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
 
@@ -15,10 +15,10 @@ public class PluginCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof ConsoleCommandSender)) {
+    public boolean onCommand(CommandSender sender, Command command, String head, String[] args) {
+        if (!(sender instanceof ConsoleSender)) {
             sender.sendMessage(FileLanguage.COMMAND_MISSING_PERMISSION);
-            return;
+            return false;
         }
 
         LACore.getLogger().println("&6Plugin numbers about: {}", LACore.getPluginManager().getPlugins().length);
@@ -37,10 +37,12 @@ public class PluginCommand extends Command {
             String nameColor = plugin.isEnabled() ? "&a" : "&c";
             LACore.getLogger().info("&8|- {}&f({}) &8- {}\n   &8└─ by {}", nameColor + plugin.getDescription().getName(), plugin.getDescription().getVersion(), plugin.getDescription().getDescription(), author.toString());
         }
+
+        return true;
     }
 
     @Override
-    public List<String> getTabComplete(CommandSender sender, Command command, String head, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String head, String[] args) {
         return Collections.emptyList();
     }
 }

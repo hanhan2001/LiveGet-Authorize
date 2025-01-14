@@ -12,7 +12,7 @@ public interface CommandManager {
      * @param fallbackPrefix command's prefix
      * @param command Command
      */
-    void registerCommand(String fallbackPrefix, Command command);
+    void registerCommand(String fallbackPrefix, CommandExecutor command);
 
     /**
      * Register command
@@ -20,22 +20,22 @@ public interface CommandManager {
      * @param plugin Plugin
      * @param command Command
      */
-    void registerCommand(Plugin plugin, Command command);
+    void registerCommand(Plugin plugin, CommandExecutor command);
 
     /**
      * Get command by name or alias
      *
      * @param command Command's name or alias
-     * @return Command
+     * @return CommandExecutor
      */
-    Command getCommand(String command);
+    CommandExecutor getCommand(String command);
 
     /**
      * Get commands
      *
      * @return ArrayList
      */
-    List<Command> getCommands();
+    List<CommandExecutor> getCommands();
 
     /**
      * Perform command

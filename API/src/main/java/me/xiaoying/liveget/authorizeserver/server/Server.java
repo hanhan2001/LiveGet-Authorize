@@ -21,5 +21,5 @@ public interface Server {
 
     CommandManager getCommandManager();
 
-    CommandSender getConsoleCommandSender();
+    CommandSender getConsoleSender();
 }
