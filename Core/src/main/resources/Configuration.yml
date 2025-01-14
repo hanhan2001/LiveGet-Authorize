@@ -62,7 +62,7 @@ Setting:
   #存储数据
   Data:
     #存储方式(SQLite/Mysql)
-    Type: "MYSQL"
+    Type: "SQLite"
     Mysql:
       #地址
       Hostname: "jdbc:mysql://localhost"
