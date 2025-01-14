@@ -64,9 +64,9 @@ public class SimpleUserManager implements UserManager {
             LACore.getLogger().print("Email: ");
             email = console.readLine();
 
+            this.user_count = 1;
             this.createUser(account, account, password, phoneNumber, email, "admin");
 
-            this.user_count = 1;
             LACore.getLogger().info("Complete...");
         } else this.user_count = select_tables.get(0).getRecords().size();
     }
