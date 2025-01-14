@@ -42,28 +42,7 @@ public class SimpleUserManager implements UserManager {
 
         // Determine whither the table if empty.
         List<Table> select_tables = LiveGetAuthorizeServer.getSqlFactory().run(new Select(Collections.singletonList("uuid"), FileConfig.SETTING_TABLE_USER));
-        if (select_tables.get(0).getRecords().isEmpty()) {
-            LACore.getLogger().info("User list is empty, need to create a default admin account.");
-
-            Scanner scanner = new Scanner(System.in);
-            Console console = System.console();
-
-            String password, email;
-            long phoneNumber;
-            LACore.getLogger().print("Email: ");
-            email = console.readLine();
-
-            LACore.getLogger().print("Password: ");
-            password = String.valueOf(console.readPassword());
-
-            LACore.getLogger().print("PhoneNumber: ");
-            phoneNumber = scanner.nextLong();
-
-            this.user_count = 1;
-            this.createUser(email, email, password, phoneNumber, "admin");
-
-            LACore.getLogger().info("Complete...");
-        } else this.user_count = select_tables.get(0).getRecords().size();
+        this.user_count = select_tables.get(0).getRecords().size();
     }
 
     @Override
