@@ -14,7 +14,10 @@ public class HelpCommand extends Command {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String head, String[] args) {
         LACore.getLogger().println("&6Command numbers about: {}", LACore.getCommandManager().getCommands().size());
-        LACore.getCommandManager().getCommands().forEach(cmd -> LACore.getLogger().println("&8|- &e{} &8->&f {}\n   &8└─ Usage: &7{}", command.getName(), command.getDescription(), command.getUsage()));
+        LACore.getCommandManager().getCommands().forEach(cmd -> {
+            Command _command = (Command) cmd;
+            LACore.getLogger().println("&8|- &e{} &8->&f {}\n   &8└─ Usage: &7{}", _command.getName(), _command.getDescription(), _command.getUsage());
+        });
         return true;
     }
 
