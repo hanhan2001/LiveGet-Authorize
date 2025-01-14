@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.event.server.ServerStartedEvent;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
+import me.xiaoying.liveget.authorizeserver.utils.EncryptUtil;
 import me.xiaoying.sql.MysqlFactory;
 import me.xiaoying.sql.SqlFactory;
 import me.xiaoying.sql.SqliteFactory;
@@ -16,6 +17,14 @@ public class LiveGetAuthorizeServer {
         LACore.setServer(new AuthorizeServer());
         LACore.getServer().start();
         LACore.getPluginManager().callEvent(new ServerStartedEvent(LACore.getServer()));
+    }
+
+    public static String passwordEncrypt(String password) {
+        return switch (FileConfig.SETTING_PASSWORD_ENCRYPT.toUpperCase(Locale.ENGLISH)) {
+            case "BASE64" -> EncryptUtil.base64Encrypt(password);
+            case "MD5" -> EncryptUtil.md5Encrypt(password);
+            default -> EncryptUtil.SHA256Encrypt(password);
+        };
     }
 
     public static SqlFactory getSqlFactory() {

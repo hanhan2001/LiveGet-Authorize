@@ -3,6 +3,7 @@ package me.xiaoying.liveget.authorizeserver.user;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.xiaoying.liveget.authorizeserver.AuthorizeServer;
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.LiveGetAuthorizeServer;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
@@ -139,17 +140,7 @@ public class SimpleUserManager implements UserManager {
 
     @Override
     public User createUser(String name, String account, String password, long phoneNumber, String email, String group) {
-        switch (FileConfig.SETTING_PASSWORD_ENCRYPT.toUpperCase(Locale.ENGLISH)) {
-            case "BASE64":
-                password = EncryptUtil.base64Encrypt(password);
-                break;
-            case "MD5":
-                password = EncryptUtil.md5Encrypt(password);
-                break;
-            default:
-            case "SHA256":
-                password = EncryptUtil.SHA256Encrypt(password);
-        }
+        password = LiveGetAuthorizeServer.passwordEncrypt(password);
 
         ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, account, password, phoneNumber, email, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
 
