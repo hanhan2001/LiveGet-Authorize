@@ -21,6 +21,7 @@ public class SimpleUserManager implements UserManager {
     private final Map<String, Integer> uuidUsers = new HashMap<>();
     private final Map<String, Integer> emailUsers = new HashMap<>();
     private final Map<String, Integer> accountUsers = new HashMap<>();
+    private final Map<Long, Integer> phoneNumberUsers = new HashMap<>();
     private final Map<Integer, User> hashUsers = new HashMap<>();
 
     private int user_count = 0;
@@ -83,6 +84,11 @@ public class SimpleUserManager implements UserManager {
     @Override
     public User getUserByEmail(String email) {
         return this.emailUsers.containsKey(email) ? this.getUserByHashcode(this.emailUsers.get(email)) : this.findUser("email", email);
+    }
+
+    @Override
+    public User getUserByPhoneNumber(long phoneNumber) {
+        return this.phoneNumberUsers.containsKey(phoneNumber) ? this.getUserByHashcode(this.phoneNumberUsers.get(phoneNumber)) : this.findUser("phone_number", String.valueOf(phoneNumber));
     }
 
     /**
@@ -160,6 +166,7 @@ public class SimpleUserManager implements UserManager {
         this.uuidUsers.remove(user.getUUID());
         this.emailUsers.remove(user.getEmail());
         this.accountUsers.remove(user.getAccount());
+        this.phoneNumberUsers.remove(user.getPhoneNumber());
 
         this.hashUsers.remove(user.hashCode());
 
@@ -183,6 +190,7 @@ public class SimpleUserManager implements UserManager {
         this.uuidUsers.put(user.getUUID(), hashcode);
         this.emailUsers.put(user.getEmail(), hashcode);
         this.accountUsers.put(user.getAccount(), hashcode);
+        this.phoneNumberUsers.put(user.getPhoneNumber(), hashcode);
 
         this.hashUsers.put(hashcode, user);
     }

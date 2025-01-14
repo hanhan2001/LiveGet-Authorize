@@ -29,6 +29,14 @@ public interface UserManager {
     User getUserByEmail(String email);
 
     /**
+     * Get user by user's phone number
+     *
+     * @param phoneNumber User's phone number
+     * @return User
+     */
+    User getUserByPhoneNumber(long phoneNumber);
+
+    /**
      * Create a new user
      *
      * @param name User's name
