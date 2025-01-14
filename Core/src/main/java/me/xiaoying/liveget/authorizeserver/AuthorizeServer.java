@@ -2,7 +2,7 @@ package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.*;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
-import me.xiaoying.liveget.authorizeserver.entity.ConsoleCommandSender;
+import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.file.FileLanguage;
 import me.xiaoying.liveget.authorizeserver.file.FileManager;
@@ -34,7 +34,7 @@ public class AuthorizeServer implements Server {
     private CommandManager commandManager;
     private ScheduledManager scheduledManager;
 
-    private final CommandSender consoleCommandSender = new ConsoleCommandSender();
+    private final CommandSender consoleSender = new ConsoleSender();
 
     @Override
     public String getName() {
@@ -98,8 +98,8 @@ public class AuthorizeServer implements Server {
     }
 
     @Override
-    public CommandSender getConsoleCommandSender() {
-        return this.consoleCommandSender;
+    public CommandSender getConsoleSender() {
+        return this.consoleSender;
     }
 
     public void initialize() {

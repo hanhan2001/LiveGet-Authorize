@@ -2,7 +2,7 @@ package me.xiaoying.liveget.authorizeserver.entity;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 
-public class ConsoleCommandSender implements CommandSender {
+public class ConsoleSender implements CommandSender {
     @Override
     public String getName() {
         return "Console";
