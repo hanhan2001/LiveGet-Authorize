@@ -23,7 +23,7 @@ public class SimpleUserManager implements UserManager {
     private final Map<Long, Integer> phoneNumberUsers = new HashMap<>();
     private final Map<Integer, User> hashUsers = new HashMap<>();
 
-    private int user_count = 0;
+    private int user_count;
 
     public SimpleUserManager() {
         List<Column> user_columns = new ArrayList<>();
@@ -136,7 +136,7 @@ public class SimpleUserManager implements UserManager {
     public User createUser(String name, String email, String password, long phoneNumber, String group) {
         password = LiveGetAuthorizeServer.passwordEncrypt(password);
 
-        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, email, password, phoneNumber, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
+        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count++), name, email, password, phoneNumber, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
 
         JsonArray jsonArray = new JsonArray();
         if (user.getPermissions().isEmpty())
