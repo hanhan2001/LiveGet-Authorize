@@ -64,6 +64,9 @@ public class AuthorizeServer implements Server {
 
         // terminal
         try { this.terminal.start(); } catch (IOException e) { throw new RuntimeException(e); }
+
+        // hook of the server shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
     }
 
     @Override
