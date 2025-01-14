@@ -17,6 +17,13 @@ public class FileConfig extends SFile {
 
     public static String SETTING_DATEFORMAT;
 
+    public static String SETTING_TABLE_PREFIX,
+            SETTING_TABLE_USER,
+            SETTING_TABLE_GROUP,
+            SETTING_TABLE_MODULE,
+            SETTING_TABLE_OPTION,
+            SETTING_TABLE_TOKEN;
+
     public static String SETTING_DATA_TYPE,
             SETTING_DATA_MYSQL_HOSTNAME,
             SETTING_DATA_MYSQL_DATABASE,
@@ -53,6 +60,13 @@ public class FileConfig extends SFile {
         FileConfig.SETTING_DATA_CACHE_TIME = this.getConfiguration().getInt("Setting.DataCacheTime");
 
         FileConfig.SETTING_DATEFORMAT = this.getConfiguration().getString("Setting.DateFormat");
+
+        FileConfig.SETTING_TABLE_PREFIX =  this.getConfiguration().getString("Setting.Table.Prefix");
+        FileConfig.SETTING_TABLE_USER =  this.getConfiguration().getString("Setting.Table.User");
+        FileConfig.SETTING_TABLE_GROUP =  this.getConfiguration().getString("Setting.Table.Group");
+        FileConfig.SETTING_TABLE_MODULE = this.getConfiguration().getString("Setting.Table.Module");
+        FileConfig.SETTING_TABLE_OPTION = this.getConfiguration().getString("Setting.Table.Option");
+        FileConfig.SETTING_TABLE_TOKEN = this.getConfiguration().getString("Setting.Table.Token");
 
         FileConfig.SETTING_DATA_TYPE = this.getConfiguration().getString("Setting.Data.Type");
         FileConfig.SETTING_DATA_MYSQL_HOSTNAME = this.getConfiguration().getString("Setting.Data.Mysql.Hostname");

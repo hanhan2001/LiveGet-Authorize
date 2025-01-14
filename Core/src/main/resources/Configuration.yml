@@ -41,6 +41,24 @@ Setting:
   DataCacheTime: 5184000
   #日期格式
   DateFormat: "yyyy/MM/dd-HH:mm:ss"
+  #数据表设置
+  Table:
+    #表名前缀(留空则不添加前缀)
+    #存在前缀则表名为: prefix_user_info
+    #不存在前缀则表名为: user_info
+    Prefix: ""
+    #用户数据表
+    User: "user_info"
+    #权限组数据表
+    Group: "group_info"
+    #授权模块
+    Module: "module_info"
+    #设置
+    Option: "option_list"
+    #授权码
+    #module -> 授权模块
+    #classification -> 主模块(default)或子模块(ANY)
+    Token: "token_%module%_%classification%"
   #存储数据
   Data:
     #存储方式(SQLite/Mysql)
