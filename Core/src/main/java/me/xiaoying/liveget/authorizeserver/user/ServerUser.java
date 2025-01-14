@@ -17,7 +17,6 @@ import java.util.List;
 public class ServerUser implements User {
     private final String uuid;
     private String name;
-    private final String account;
     private String password;
     private long phoneNumber;
     private String email;
@@ -29,13 +28,12 @@ public class ServerUser implements User {
 
     private boolean admin;
 
-    public ServerUser(String uuid, String name, String account, String password, long phoneNumber, String email, String group, List<Permission> permissions, String ip, Date registerTime, Date lastLoginTime) {
+    public ServerUser(String uuid, String name, String email, String password, long phoneNumber, String group, List<Permission> permissions, String ip, Date registerTime, Date lastLoginTime) {
         this.uuid = uuid;
         this.name = name;
-        this.account = account;
+        this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.email = email;
         this.group = group;
         this.permissions = permissions;
         this.ip = ip;
@@ -70,16 +68,6 @@ public class ServerUser implements User {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Get user's account
-     *
-     * @return User's account
-     */
-    @Override
-    public String getAccount() {
-        return this.account;
     }
 
     /**
@@ -294,7 +282,6 @@ public class ServerUser implements User {
 
         Update update = new Update(FileConfig.SETTING_TABLE_USER);
         update.set("name", this.getName());
-        update.set("account", this.getAccount());
         update.set("password", this.getPassword());
         update.set("phone_number", this.getPhoneNumber());
         update.set("email", this.getEmail());

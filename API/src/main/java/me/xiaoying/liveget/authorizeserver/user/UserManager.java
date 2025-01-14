@@ -13,14 +13,6 @@ public interface UserManager {
     User getUserByUUID(String uuid);
 
     /**
-     * Get user by user's account
-     *
-     * @param account User's account
-     * @return User
-     */
-    User getUserByAccount(String account);
-
-    /**
      * Get user by user's email
      *
      * @param email User's e-mail
@@ -40,14 +32,13 @@ public interface UserManager {
      * Create a new user
      *
      * @param name User's name
-     * @param account User's account
+     * @param email User's email
      * @param password User's password
      * @param phoneNumber User's phone number
-     * @param email User's email
      * @param group User's group
      * @return User
      */
-    User createUser(String name, String account, String password, long phoneNumber, String email, String group);
+    User createUser(String name, String email, String password, long phoneNumber, String group);
 
     /**
      * Delete user

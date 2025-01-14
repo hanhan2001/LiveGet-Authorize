@@ -24,11 +24,11 @@ public interface User {
     String getName();
 
     /**
-     * Get user's account
+     * Get user's e-mail
      *
-     * @return User's account
+     * @return User's e-mail
      */
-    String getAccount();
+    String getEmail();
 
     /**
      * Get user's phone number
@@ -36,13 +36,6 @@ public interface User {
      * @return User's phone number
      */
     long getPhoneNumber();
-
-    /**
-     * Get user's e-mail
-     *
-     * @return User's e-mail
-     */
-    String getEmail();
 
     /**
      * Get user's group

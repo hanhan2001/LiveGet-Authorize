@@ -20,7 +20,6 @@ import java.util.*;
 public class SimpleUserManager implements UserManager {
     private final Map<String, Integer> uuidUsers = new HashMap<>();
     private final Map<String, Integer> emailUsers = new HashMap<>();
-    private final Map<String, Integer> accountUsers = new HashMap<>();
     private final Map<Long, Integer> phoneNumberUsers = new HashMap<>();
     private final Map<Integer, User> hashUsers = new HashMap<>();
 
@@ -30,10 +29,9 @@ public class SimpleUserManager implements UserManager {
         List<Column> user_columns = new ArrayList<>();
         user_columns.add(new Column("uuid", "varchar", 9));
         user_columns.add(new Column("name", "varchar", 255));
-        user_columns.add(new Column("account", "varchar", 255));
+        user_columns.add(new Column("email", "varchar", 255));
         user_columns.add(new Column("password", "varchar", 255));
         user_columns.add(new Column("phone_number", "int", 11));
-        user_columns.add(new Column("email", "varchar", 255));
         user_columns.add(new Column("group", "varchar", 255));
         user_columns.add(new Column("permissions", "longtext", 0));
         user_columns.add(new Column("ip", "varchar", 15));
@@ -50,10 +48,10 @@ public class SimpleUserManager implements UserManager {
             Scanner scanner = new Scanner(System.in);
             Console console = System.console();
 
-            String account, password, email;
+            String password, email;
             long phoneNumber;
-            LACore.getLogger().print("Account: ");
-            account = console.readLine();
+            LACore.getLogger().print("Email: ");
+            email = console.readLine();
 
             LACore.getLogger().print("Password: ");
             password = String.valueOf(console.readPassword());
@@ -61,11 +59,9 @@ public class SimpleUserManager implements UserManager {
             LACore.getLogger().print("PhoneNumber: ");
             phoneNumber = scanner.nextLong();
 
-            LACore.getLogger().print("Email: ");
-            email = console.readLine();
 
             this.user_count = 1;
-            this.createUser(account, account, password, phoneNumber, email, "admin");
+            this.createUser(email, email, password, phoneNumber, "admin");
 
             LACore.getLogger().info("Complete...");
         } else this.user_count = select_tables.get(0).getRecords().size();
@@ -76,10 +72,6 @@ public class SimpleUserManager implements UserManager {
         return this.uuidUsers.containsKey(uuid) ? this.getUserByHashcode(this.uuidUsers.get(uuid)) : this.findUser("uuid", uuid);
     }
 
-    @Override
-    public User getUserByAccount(String account) {
-        return this.accountUsers.containsKey(account) ? this.getUserByHashcode(this.accountUsers.get(account)) : this.findUser("account", account);
-    }
 
     @Override
     public User getUserByEmail(String email) {
@@ -102,13 +94,12 @@ public class SimpleUserManager implements UserManager {
     }
 
     private User findUser(String key, String value) {
-        if (!key.equalsIgnoreCase("uuid") && !key.equalsIgnoreCase("account") && !key.equalsIgnoreCase("email"))
+        if (!key.equalsIgnoreCase("uuid") && !key.equalsIgnoreCase("email"))
             return null;
 
         List<String> columns = new ArrayList<>();
         columns.add("uuid");
         columns.add("name");
-        columns.add("account");
         columns.add("password");
         columns.add("phone_number");
         columns.add("email");
@@ -137,16 +128,16 @@ public class SimpleUserManager implements UserManager {
             permissions.add(new ServerPermission(jsonObject.get("permission").toString(), save, over));
         }
 
-        ServerUser user = new ServerUser(record.get("uuid").toString(), record.get("name").toString(), record.get("account").toString(), record.get("password").toString(), Long.parseLong(record.get("phone_number").toString()), record.get("email").toString(), record.get("group").toString(), permissions, record.get("ip").toString(), DateUtil.parse(record.get("registerTime").toString(), FileConfig.SETTING_DATEFORMAT), DateUtil.parse(record.get("lastLoginTime").toString(), FileConfig.SETTING_DATEFORMAT));
+        ServerUser user = new ServerUser(record.get("uuid").toString(), record.get("name").toString(), record.get("email").toString(), record.get("password").toString(), Long.parseLong(record.get("phone_number").toString()), record.get("group").toString(), permissions, record.get("ip").toString(), DateUtil.parse(record.get("registerTime").toString(), FileConfig.SETTING_DATEFORMAT), DateUtil.parse(record.get("lastLoginTime").toString(), FileConfig.SETTING_DATEFORMAT));
         this.recordUser(user);
         return user;
     }
 
     @Override
-    public User createUser(String name, String account, String password, long phoneNumber, String email, String group) {
+    public User createUser(String name, String email, String password, long phoneNumber, String group) {
         password = LiveGetAuthorizeServer.passwordEncrypt(password);
 
-        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, account, password, phoneNumber, email, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
+        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count), name, email, password, phoneNumber, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
 
         JsonArray jsonArray = new JsonArray();
         if (user.getPermissions().isEmpty())
@@ -155,7 +146,7 @@ public class SimpleUserManager implements UserManager {
             user.getPermissions().forEach(permission -> jsonArray.add(permission.toString()));
 
         Insert insert = new Insert(FileConfig.SETTING_TABLE_USER);
-        insert.insert(user.getUUID(), user.getName(), user.getAccount(), user.getPassword(), user.getPhoneNumber(), user.getEmail(), user.getGroup(), jsonArray.getAsString(), user.getIP(), DateUtil.getDate(user.getRegisterTime(), FileConfig.SETTING_DATEFORMAT), DateUtil.getDate(user.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT), "");
+        insert.insert(user.getUUID(), user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getGroup(), jsonArray.getAsString(), user.getIP(), DateUtil.getDate(user.getRegisterTime(), FileConfig.SETTING_DATEFORMAT), DateUtil.getDate(user.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT), "");
         LiveGetAuthorizeServer.getSqlFactory().run(insert);
         this.recordUser(user);
         return user;
@@ -165,7 +156,6 @@ public class SimpleUserManager implements UserManager {
     public void delUser(User user) {
         this.uuidUsers.remove(user.getUUID());
         this.emailUsers.remove(user.getEmail());
-        this.accountUsers.remove(user.getAccount());
         this.phoneNumberUsers.remove(user.getPhoneNumber());
 
         this.hashUsers.remove(user.hashCode());
@@ -189,7 +179,6 @@ public class SimpleUserManager implements UserManager {
 
         this.uuidUsers.put(user.getUUID(), hashcode);
         this.emailUsers.put(user.getEmail(), hashcode);
-        this.accountUsers.put(user.getAccount(), hashcode);
         this.phoneNumberUsers.put(user.getPhoneNumber(), hashcode);
 
         this.hashUsers.put(hashcode, user);
