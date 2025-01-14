@@ -4,6 +4,7 @@ import me.xiaoying.liveget.authorizeserver.permission.Permission;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User
@@ -56,7 +57,7 @@ public interface User {
      *
      * @return User's permissions
      */
-    List<Permission> getPermissions();
+    Map<String, Permission> getPermissions();
 
     /**
      * Determine the user has the permission

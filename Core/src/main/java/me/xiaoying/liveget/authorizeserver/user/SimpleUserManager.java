@@ -114,17 +114,18 @@ public class SimpleUserManager implements UserManager {
             return null;
         Record record = tables.get(0).getRecords().get(0);
 
-        List<Permission> permissions = new ArrayList<>();
+        Map<String, Permission> permissions = new HashMap<>();
         JsonArray jsonArray = JsonParser.parseString(record.get("permissions").toString()).getAsJsonArray();
         for (int i = 0; i < jsonArray.size(); i++) {
+            String permission;
             Date save = null, over = null;
 
             JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            jsonObject.get("permission");
+            permission = jsonObject.get("permission").getAsString();
             if (jsonObject.has("save")) save = DateUtil.parse(jsonObject.get("save").getAsString(), FileConfig.SETTING_DATEFORMAT);
             if (jsonObject.has("save")) over = DateUtil.parse(jsonObject.get("over").getAsString(), FileConfig.SETTING_DATEFORMAT);
 
-            permissions.add(new ServerPermission(jsonObject.get("permission").toString(), save, over));
+            permissions.put(permission, new ServerPermission(permission, save, over));
         }
 
         ServerUser user = new ServerUser(record.get("uuid").toString(), record.get("name").toString(), record.get("email").toString(), record.get("password").toString(), Long.parseLong(record.get("phone_number").toString()), record.get("group").toString(), permissions, record.get("ip").toString(), DateUtil.parse(record.get("registerTime").toString(), FileConfig.SETTING_DATEFORMAT), DateUtil.parse(record.get("lastLoginTime").toString(), FileConfig.SETTING_DATEFORMAT));
@@ -136,13 +137,13 @@ public class SimpleUserManager implements UserManager {
     public User createUser(String name, String email, String password, long phoneNumber, String group) {
         password = LiveGetAuthorizeServer.passwordEncrypt(password);
 
-        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count++), name, email, password, phoneNumber, group, new ArrayList<>(), "0.0.0.0", new Date(), new Date());
+        ServerUser user = new ServerUser(new DecimalFormat("000000000").format(this.user_count++), name, email, password, phoneNumber, group, new HashMap<>(), "0.0.0.0", new Date(), new Date());
 
         JsonArray jsonArray = new JsonArray();
         if (user.getPermissions().isEmpty())
             jsonArray.add("");
         else
-            user.getPermissions().forEach(permission -> jsonArray.add(permission.toString()));
+            user.getPermissions().values().forEach(permission -> jsonArray.add(permission.toString()));
 
         Insert insert = new Insert(FileConfig.SETTING_TABLE_USER);
         insert.insert(user.getUUID(), user.getName(), user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getGroup(), jsonArray.getAsString(), user.getIP(), DateUtil.getDate(user.getRegisterTime(), FileConfig.SETTING_DATEFORMAT), DateUtil.getDate(user.getLastLoginTime(), FileConfig.SETTING_DATEFORMAT), "");

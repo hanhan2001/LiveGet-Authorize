@@ -9,7 +9,9 @@ import me.xiaoying.sql.sentence.Condition;
 import me.xiaoying.sql.sentence.Update;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Server user
@@ -21,14 +23,14 @@ public class ServerUser implements User {
     private long phoneNumber;
     private String email;
     private String group;
-    private List<Permission> permissions;
+    private Map<String, Permission> permissions;
     private String ip;
     private Date registerTime;
     private Date lastLoginTime;
 
     private boolean admin;
 
-    public ServerUser(String uuid, String name, String email, String password, long phoneNumber, String group, List<Permission> permissions, String ip, Date registerTime, Date lastLoginTime) {
+    public ServerUser(String uuid, String name, String email, String password, long phoneNumber, String group, Map<String, Permission> permissions, String ip, Date registerTime, Date lastLoginTime) {
         this.uuid = uuid;
         this.name = name;
         this.email = email;
@@ -152,7 +154,7 @@ public class ServerUser implements User {
      * @return User's permissions
      */
     @Override
-    public List<Permission> getPermissions() {
+    public Map<String, Permission> getPermissions() {
         return this.permissions;
     }
 
@@ -161,7 +163,7 @@ public class ServerUser implements User {
      *
      * @param permissions New permissions
      */
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(Map<String, Permission> permissions) {
         this.permissions = permissions;
     }
 
@@ -172,10 +174,10 @@ public class ServerUser implements User {
      */
     @Override
     public void setPermission(Permission permission) {
-        if (this.permissions.contains(permission))
-            return;
-
-        this.permissions.add(permission);
+//        if (this.permissions.containsKey(permission.get))
+//            return;
+//
+//        this.permissions.add(permission);
     }
 
     /**
@@ -278,7 +280,7 @@ public class ServerUser implements User {
         if (this.getPermissions().isEmpty())
             permissions.add("");
         else
-            this.getPermissions().forEach(permission -> permissions.add(permission.toString()));
+            this.permissions.values().forEach(permission -> permissions.add(permission.toString()));
 
         Update update = new Update(FileConfig.SETTING_TABLE_USER);
         update.set("name", this.getName());
