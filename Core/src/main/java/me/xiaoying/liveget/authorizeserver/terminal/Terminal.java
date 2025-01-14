@@ -8,6 +8,7 @@ import me.xiaoying.logger.event.Listener;
 import me.xiaoying.logger.event.terminal.TerminalWantLogEvent;
 import org.jline.builtins.Completers;
 import org.jline.reader.Completer;
+import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.TerminalBuilder;
 
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 public class Terminal implements Listener {
     private final String prompt = "> ";
@@ -26,7 +26,6 @@ public class Terminal implements Listener {
     }
 
     public void start() throws IOException {
-        Scanner scanner = new Scanner(System.in);
         org.jline.terminal.Terminal terminal = TerminalBuilder.builder().system(true).build();
 
         LACore.getLogger().info("For help, type \"help\" or \"?\"");
@@ -34,16 +33,16 @@ public class Terminal implements Listener {
         scheduledManager.scheduleAsyncRepeatingTask(() -> {
             LACore.getLogger().print(this.prompt);
 
-            String input = scanner.nextLine();
+            String head = null;
+            String[] args = {};
+            LineReader lineReader = LineReaderBuilder.builder().terminal(terminal).completer(this.getCompleter(head, args)).build();
+            String input = lineReader.readLine();
 
             String[] split = input.split(" ");
-            String head = split[0];
-            String[] args = {};
+            head = split[0];
 
             if (split.length > 1)
                 args = new ArrayList<>(Arrays.asList(split).subList(1, split.length)).toArray(new String[0]);
-
-            LineReaderBuilder.builder().terminal(terminal).completer(this.getCompleter(head, args)).build();
 
             Command command = LACore.getCommandManager().getCommand(head);
             if (command == null) {
