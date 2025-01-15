@@ -1,6 +1,8 @@
 package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.*;
+import me.xiaoying.liveget.authorizeserver.command.command.Command;
+import me.xiaoying.liveget.authorizeserver.command.command.SCommand;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
@@ -15,13 +17,16 @@ import me.xiaoying.liveget.authorizeserver.server.Server;
 import me.xiaoying.liveget.authorizeserver.terminal.Terminal;
 import me.xiaoying.liveget.authorizeserver.user.SimpleUserManager;
 import me.xiaoying.liveget.authorizeserver.user.UserManager;
+import me.xiaoying.logger.ChatColor;
 import me.xiaoying.logger.event.EventHandle;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class AuthorizeServer implements Server {
     private boolean running = false;
@@ -35,6 +40,8 @@ public class AuthorizeServer implements Server {
     private ScheduledManager scheduledManager;
 
     private final CommandSender consoleSender = new ConsoleSender();
+
+    private final List<SCommand> commands = new ArrayList<>();
 
     @Override
     public String getName() {
@@ -117,9 +124,13 @@ public class AuthorizeServer implements Server {
 
         // commands
         LACore.getLogger().info("Registering default commands...");
-        LACore.getCommandManager().registerCommand("authorize", new StopCommand("stop", "A default command of server", "/stop"));
-        LACore.getCommandManager().registerCommand("authorize", new HelpCommand("help", "A default command of server", "/help", Collections.singletonList("?")));
-        LACore.getCommandManager().registerCommand("authorize", new PluginCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
+        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("stop", "A default command of server", "/stop"));
+        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("help", "A default command of server", "/help or /?", Collections.singletonList("?")));
+        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
+
+        LACore.getCommandManager().getCommand("authorize:stop").setExecutor(new StopCommand());
+        LACore.getCommandManager().getCommand("authorize:help").setExecutor(new HelpCommand());
+        LACore.getCommandManager().getCommand("authorize:plugins").setExecutor(new PluginCommand());
 
         // user manager
         this.userManager = new SimpleUserManager();
@@ -137,5 +148,32 @@ public class AuthorizeServer implements Server {
 
     public void unInitialize() {
 
+    }
+
+    public void registerCommand(SCommand scommand) {
+        if (this.commands.contains(scommand))
+            return;
+
+        this.commands.add(scommand);
+
+        Command annotation = scommand.getClass().getAnnotation(Command.class);
+
+        if (annotation == null) {
+            LACore.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&eFined some command(" + scommand.getClass().getName() + ") don't use Command annotation, please check your code!"));
+            return;
+        }
+
+//        LACore.getCommandManager().registerCommand("authorize", new CommandExecutor() {
+//            @Override
+//            public boolean onCommand(CommandSender sender, me.xiaoying.liveget.authorizeserver.command.Command command, String head, String[] args) {
+//                scommand.performCommand(sender, args);
+//                return true;
+//            }
+//
+//            @Override
+//            public List<String> onTabComplete(CommandSender sender, me.xiaoying.liveget.authorizeserver.command.Command command, String head, String[] args) {
+//                return scommand.onTabComplete(sender, command, head, args);
+//            }
+//        });
     }
 }

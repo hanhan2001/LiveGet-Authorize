@@ -9,11 +9,7 @@ import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
 import java.util.Collections;
 import java.util.List;
 
-public class PluginCommand extends Command {
-    public PluginCommand(String name, String description, String usage, List<String> alias) {
-        super(name, description, usage, alias);
-    }
-
+public class PluginCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String head, String[] args) {
         if (!(sender instanceof ConsoleSender)) {

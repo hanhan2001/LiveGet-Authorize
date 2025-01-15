@@ -3,7 +3,7 @@ package me.xiaoying.liveget.authorizeserver.command;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
 
-import java.util.List;
+import java.util.Map;
 
 public interface CommandManager {
     /**
@@ -12,7 +12,7 @@ public interface CommandManager {
      * @param fallbackPrefix command's prefix
      * @param command Command
      */
-    void registerCommand(String fallbackPrefix, CommandExecutor command);
+    void registerCommand(String fallbackPrefix, Command command);
 
     /**
      * Register command
@@ -20,22 +20,22 @@ public interface CommandManager {
      * @param plugin Plugin
      * @param command Command
      */
-    void registerCommand(Plugin plugin, CommandExecutor command);
+    void registerCommand(Plugin plugin, Command command);
 
     /**
      * Get command by name or alias
      *
      * @param command Command's name or alias
-     * @return CommandExecutor
+     * @return Command
      */
-    CommandExecutor getCommand(String command);
+    Command getCommand(String command);
 
     /**
      * Get commands
      *
      * @return ArrayList
      */
-    List<CommandExecutor> getCommands();
+    Map<String, Command> getCommands();
 
     /**
      * Perform command
