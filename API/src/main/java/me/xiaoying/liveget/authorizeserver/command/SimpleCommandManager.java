@@ -13,20 +13,30 @@ public class SimpleCommandManager implements CommandManager {
     @Override
     public void registerCommand(String fallbackPrefix, Command command) {
         this.knownCommands.put(new NamespacedKey(fallbackPrefix, command.getName()).toString(), command);
-        command.getAlias().forEach(string -> this.knownCommands.put(new NamespacedKey(fallbackPrefix, string).toString(), command));
     }
 
     @Override
     public void registerCommand(Plugin plugin, Command command) {
         this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), command.getName()).toString(), command);
-        command.getAlias().forEach(string -> this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), string).toString(), command));
     }
 
     @Override
     public Command getCommand(String command) {
+        String origin = command;
         command = this.matchCommand(command);
 
-        return this.knownCommands.get(command) != null ? this.knownCommands.get(command) : null;
+        Command cmd;
+        if ((cmd = this.knownCommands.get(command)) != null)
+            return cmd;
+
+        for (Command c : this.knownCommands.values()) {
+            if (!c.getAlias().contains(origin))
+                return null;
+
+            return c;
+        }
+
+        return null;
     }
 
     @Override
