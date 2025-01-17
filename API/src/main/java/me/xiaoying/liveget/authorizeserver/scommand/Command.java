@@ -13,4 +13,6 @@ import java.lang.annotation.Target;
 public @interface Command {
     String[] values();
     int[] length();
+    String description() default "";
+    String usage() default "";
 }

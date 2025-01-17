@@ -39,9 +39,9 @@ public class SimpleCommandManager implements CommandManager {
 
         Command cmd;
         if (!alias.isEmpty())
-            cmd = new ServerCommand(commandName, "", "", alias);
+            cmd = new ServerCommand(commandName, annotation.description(), annotation.usage(), alias);
         else
-            cmd = new ServerCommand(commandName, "", "");
+            cmd = new ServerCommand(commandName, annotation.description(), annotation.usage());
 
         cmd.setExecutor(command.getTabExecutor());
 
