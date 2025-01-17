@@ -101,7 +101,7 @@ public abstract class SCommand {
                 conditionList.add(s1);
             }
 
-            if (conditionList.size() == 0)
+            if (conditionList.isEmpty())
                 return list;
             return conditionList;
         }
