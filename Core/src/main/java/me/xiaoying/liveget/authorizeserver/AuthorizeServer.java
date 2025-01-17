@@ -1,7 +1,6 @@
 package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.*;
-import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
@@ -22,9 +21,7 @@ import org.springframework.boot.SpringApplication;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class AuthorizeServer implements Server {
     private boolean running = false;
@@ -38,8 +35,6 @@ public class AuthorizeServer implements Server {
     private ScheduledManager scheduledManager;
 
     private final CommandSender consoleSender = new ConsoleSender();
-
-    private final List<SCommand> commands = new ArrayList<>();
 
     @Override
     public String getName() {
