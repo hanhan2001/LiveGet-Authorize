@@ -1,4 +1,4 @@
-package me.xiaoying.liveget.authorizeserver.command.command;
+package me.xiaoying.liveget.authorizeserver.scommand;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.command.CommandExecutor;

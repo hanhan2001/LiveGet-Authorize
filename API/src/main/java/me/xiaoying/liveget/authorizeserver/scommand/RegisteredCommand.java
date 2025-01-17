@@ -1,4 +1,4 @@
-package me.xiaoying.liveget.authorizeserver.command.command;
+package me.xiaoying.liveget.authorizeserver.scommand;
 
 /**
  * Command RegisteredCommand

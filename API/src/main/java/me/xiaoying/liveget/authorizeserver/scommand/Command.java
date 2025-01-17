@@ -1,4 +1,4 @@
-package me.xiaoying.liveget.authorizeserver.command.command;
+package me.xiaoying.liveget.authorizeserver.scommand;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
