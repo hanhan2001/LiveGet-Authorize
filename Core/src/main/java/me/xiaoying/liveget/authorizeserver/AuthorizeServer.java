@@ -131,6 +131,8 @@ public class AuthorizeServer implements Server {
         commandManager.getCommand("authorize:help").setExecutor(new HelpCommand());
         commandManager.getCommand("authorize:plugins").setExecutor(new PluginCommand());
 
+        commandManager.registerCommand("authorize", new UserCommand());
+
         // user manager
         this.userManager = new SimpleUserManager();
 

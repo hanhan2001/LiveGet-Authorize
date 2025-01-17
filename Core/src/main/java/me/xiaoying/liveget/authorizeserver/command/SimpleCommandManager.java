@@ -2,15 +2,16 @@ package me.xiaoying.liveget.authorizeserver.command;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.NamespacedKey;
+import me.xiaoying.liveget.authorizeserver.ServerCommand;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
+import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 
 import java.util.*;
 
 public class SimpleCommandManager implements CommandManager {
     private final Map<String, Command> knownCommands = new HashMap<>();
 
-    @Override
     public void registerCommand(String fallbackPrefix, Command command) {
         this.knownCommands.put(new NamespacedKey(fallbackPrefix, command.getName()).toString(), command);
     }
@@ -18,6 +19,38 @@ public class SimpleCommandManager implements CommandManager {
     @Override
     public void registerCommand(Plugin plugin, Command command) {
         this.knownCommands.put(new NamespacedKey(plugin.getDescription().getName(), command.getName()).toString(), command);
+    }
+
+    public void registerCommand(String fallbackPrefix, SCommand command) {
+        me.xiaoying.liveget.authorizeserver.scommand.Command annotation = command.getClass().getAnnotation(me.xiaoying.liveget.authorizeserver.scommand.Command.class);
+
+        if (annotation == null) {
+            LACore.getLogger().warn("SCommand class of {} don't have me.xiaoying.liveget.authorizeserver.scommand.Command annotation!", command.getClass().getName());
+            return;
+        }
+
+        if (annotation.values().length == 0)
+            return;
+
+        String commandName = annotation.values()[0];
+        List<String> alias = new ArrayList<>();
+        if (annotation.values().length > 1)
+            alias.addAll(Arrays.asList(annotation.values()).subList(1, annotation.values().length));
+
+        Command cmd;
+        if (!alias.isEmpty())
+            cmd = new ServerCommand(commandName, "", "", alias);
+        else
+            cmd = new ServerCommand(commandName, "", "");
+
+        cmd.setExecutor(command.getTabExecutor());
+
+        this.registerCommand(fallbackPrefix, cmd);
+    }
+
+    @Override
+    public void registerCommand(Plugin plugin, SCommand command) {
+        this.registerCommand(plugin.getDescription().getName(), command);
     }
 
     @Override
