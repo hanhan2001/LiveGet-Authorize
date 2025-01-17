@@ -1,8 +1,7 @@
 package me.xiaoying.liveget.authorizeserver;
 
 import me.xiaoying.liveget.authorizeserver.command.*;
-import me.xiaoying.liveget.authorizeserver.command.command.Command;
-import me.xiaoying.liveget.authorizeserver.command.command.SCommand;
+import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
@@ -17,7 +16,6 @@ import me.xiaoying.liveget.authorizeserver.server.Server;
 import me.xiaoying.liveget.authorizeserver.terminal.Terminal;
 import me.xiaoying.liveget.authorizeserver.user.SimpleUserManager;
 import me.xiaoying.liveget.authorizeserver.user.UserManager;
-import me.xiaoying.logger.ChatColor;
 import me.xiaoying.logger.event.EventHandle;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +23,6 @@ import org.springframework.boot.SpringApplication;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -149,37 +146,5 @@ public class AuthorizeServer implements Server {
 
     public void unInitialize() {
 
-    }
-
-    public void registerCommand(SCommand scommand) {
-        if (this.commands.contains(scommand))
-            return;
-
-        this.commands.add(scommand);
-
-        Command annotation = scommand.getClass().getAnnotation(Command.class);
-
-        if (annotation == null) {
-            LACore.getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&eFined some command(" + scommand.getClass().getName() + ") don't use Command annotation, please check your code!"));
-            return;
-        }
-
-        LACore.getCommandManager().registerCommand(this.getName(), new ServerCommand(annotation.values()[0], "", "", Arrays.asList(annotation.values())));
-        LACore.getCommandManager().getCommand(this.getName() + annotation.values()[0]).setExecutor(new CommandExecutor() {
-            @Override
-            public boolean onCommand(CommandSender sender, me.xiaoying.liveget.authorizeserver.command.Command command, String head, String[] args) {
-                try {
-                    scommand.performCommand(sender, args);
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-
-            @Override
-            public List<String> onTabComplete(CommandSender sender, me.xiaoying.liveget.authorizeserver.command.Command command, String head, String[] args) {
-                return scommand.onTabComplete(sender, command, head, args);
-            }
-        });
     }
 }
