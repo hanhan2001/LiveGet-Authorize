@@ -1,7 +1,7 @@
 logging:
   pattern:
-    console: "\r%clr([%d{yyyy/MM/dd-HH:mm:ss}]){green} %clr([%-4level]){aqua} %clr(-){grey} %clr(%msg%n){white}"
-    file: "\r%clr([%d{yyyy/MM/dd-HH:mm:ss}]){green} %clr([%-4level]){aqua} %clr(-){grey} %clr(%msg%n){white}"
+    console: "\r%clr([%d{HH:mm:ss}]){green} %clr([%-4level]){aqua} %clr(-){grey} %clr(%msg%n){white}"
+    file: "\r%clr([%d{HH:mm:ss}]){green} %clr([%-4level]){aqua} %clr(-){grey} %clr(%msg%n){white}"
   level:
     o.apache.catalina.core: false
     org.apache.catalina.core: false

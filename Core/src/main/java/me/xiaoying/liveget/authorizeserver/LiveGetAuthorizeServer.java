@@ -14,6 +14,8 @@ import java.util.Locale;
 @SpringBootApplication
 public class LiveGetAuthorizeServer {
     public static void main(String[] args) {
+        LACore.getLogger().setDateFormat("HH:mm:ss");
+
         LACore.setServer(new AuthorizeServer());
         LACore.getServer().start();
         LACore.getPluginManager().callEvent(new ServerStartedEvent(LACore.getServer()));
