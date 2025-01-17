@@ -1,20 +1,28 @@
 package me.xiaoying.liveget.authorizeserver.command;
 
+import me.xiaoying.liveget.authorizeserver.command.usercommand.UserCreateUserCommand;
+import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.scommand.RegisteredCommand;
 import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
-import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @me.xiaoying.liveget.authorizeserver.scommand.Command(values = "user", length = -1)
 public class UserCommand extends SCommand {
+    public UserCommand() {
+        this.registerCommand(new UserCreateUserCommand());
+    }
+
     @Override
     public List<String> getHelpMessage() {
         List<String> list = new ArrayList<>();
-        list.add("&b/user <email/uuid/phone> <user's email/user's uuid/user's phone> info &7通过 邮箱，UUID，手机号 查看用户信息");
+        list.add("&b/user create <email> <password> <phone> &7创建新用户");
+        list.add("&b/user info <用户选择类型(email/uuid/phone)> <用户> &7通过 邮箱/UUID/手机号 查询用户信息");
+        list.add("&b/user set email <用户选择类型(email/uuid/phone)> <用户> <新邮箱> &7通过 邮箱 设置用户的 邮箱");
+        list.add("&b/user set phone <用户选择类型(email/uuid/phone)> <用户> <新号码> &7通过 邮箱 设置用户的 邮箱");
+        list.add("&b/user delete <email/uuid/phone> <email/uuid/phone> &7通过 邮箱/UUID/手机号 删除对应用户");
         return list;
     }
 
@@ -51,46 +59,5 @@ public class UserCommand extends SCommand {
 
         // 未执行则发出帮助信息
         this.getHelpMessage().forEach(sender::sendMessage);
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String head, String[] strings) {
-        List<String> list = new ArrayList<>();
-        if (strings.length == 1 || strings.length == 0) {
-            list.add("email");
-            list.add("uuid");
-            list.add("phone");
-        }
-
-        List<String> conditionList = new ArrayList<>();
-
-        if (strings.length == 1) {
-            for (String s1 : list) {
-                if (!s1.toUpperCase(Locale.ENGLISH).startsWith(strings[0].toUpperCase(Locale.ENGLISH)))
-                    continue;
-                conditionList.add(s1);
-            }
-
-            if (conditionList.isEmpty())
-                return list;
-        }
-
-        if (strings.length == 3) {
-            List<RegisteredCommand> registeredCommand = this.getRegisteredCommands().get(strings[2]);
-            if (registeredCommand == null)
-                return new ArrayList<>();
-
-            strings = new ArrayList<>(Arrays.asList(strings).subList(1, strings.length)).toArray(new String[0]);
-            for (RegisteredCommand registeredCommand1 : registeredCommand) {
-                List<String> l;
-                if ((l = registeredCommand1.getSubCommand().onTabComplete(sender, command, head, strings)) == null)
-                    return null;
-
-                return l;
-            }
-            return new ArrayList<>();
-        }
-
-        return list;
     }
 }
