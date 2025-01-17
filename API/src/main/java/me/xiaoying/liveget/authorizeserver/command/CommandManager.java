@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver.command;
 
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.plugin.Plugin;
+import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 
 import java.util.Map;
 
@@ -9,18 +10,18 @@ public interface CommandManager {
     /**
      * Register command
      *
-     * @param fallbackPrefix command's prefix
+     * @param plugin Plugin
      * @param command Command
      */
-    void registerCommand(String fallbackPrefix, Command command);
+    void registerCommand(Plugin plugin, Command command);
 
     /**
      * Register command
      *
      * @param plugin Plugin
-     * @param command Command
+     * @param command SCommand
      */
-    void registerCommand(Plugin plugin, Command command);
+    void registerCommand(Plugin plugin, SCommand command);
 
     /**
      * Get command by name or alias

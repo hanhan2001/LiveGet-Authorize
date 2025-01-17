@@ -122,13 +122,14 @@ public class AuthorizeServer implements Server {
 
         // commands
         LACore.getLogger().info("Registering default commands...");
-        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("stop", "A default command of server", "/stop"));
-        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("help", "A default command of server", "/help or /?", Collections.singletonList("?")));
-        LACore.getCommandManager().registerCommand("authorize", new ServerCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
+        SimpleCommandManager commandManager = (SimpleCommandManager) this.commandManager;
+        commandManager.registerCommand("authorize", new ServerCommand("stop", "A default command of server", "/stop"));
+        commandManager.registerCommand("authorize", new ServerCommand("help", "A default command of server", "/help or /?", Collections.singletonList("?")));
+        commandManager.registerCommand("authorize", new ServerCommand("plugins", "A default command of server", "/plugins or /pl", Collections.singletonList("pl")));
 
-        LACore.getCommandManager().getCommand("authorize:stop").setExecutor(new StopCommand());
-        LACore.getCommandManager().getCommand("authorize:help").setExecutor(new HelpCommand());
-        LACore.getCommandManager().getCommand("authorize:plugins").setExecutor(new PluginCommand());
+        commandManager.getCommand("authorize:stop").setExecutor(new StopCommand());
+        commandManager.getCommand("authorize:help").setExecutor(new HelpCommand());
+        commandManager.getCommand("authorize:plugins").setExecutor(new PluginCommand());
 
         // user manager
         this.userManager = new SimpleUserManager();
