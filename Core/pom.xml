@@ -12,6 +12,7 @@
     <artifactId>Core</artifactId>
 
     <build>
+        <finalName>${parent.artifactId}-V${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
