@@ -92,7 +92,7 @@ public abstract class SCommand {
      * @return ArrayList
      */
     public List<String> onTabComplete(CommandSender sender, me.xiaoying.liveget.authorizeserver.command.Command command, String head, String[] strings) {
-        List<String> list = new ArrayList<>(registeredCommands.keySet());
+        List<String> list = new ArrayList<>(this.registeredCommands.keySet());
         if (strings.length == 1) {
             List<String> conditionList = new ArrayList<>();
             for (String s1 : list) {
