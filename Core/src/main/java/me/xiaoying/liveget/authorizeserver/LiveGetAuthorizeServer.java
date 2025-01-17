@@ -3,6 +3,7 @@ package me.xiaoying.liveget.authorizeserver;
 import me.xiaoying.liveget.authorizeserver.event.server.ServerStartedEvent;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.utils.EncryptUtil;
+import me.xiaoying.logger.LoggerFactory;
 import me.xiaoying.sql.MysqlFactory;
 import me.xiaoying.sql.SqlFactory;
 import me.xiaoying.sql.SqliteFactory;
@@ -14,7 +15,10 @@ import java.util.Locale;
 @SpringBootApplication
 public class LiveGetAuthorizeServer {
     public static void main(String[] args) {
-        LACore.getLogger().setDateFormat("HH:mm:ss");
+        String dateFormat = "HH:mm:ss";
+        LACore.getLogger().setDateFormat(dateFormat);
+        LoggerFactory.getOut().getLogger().setDateFormat(dateFormat);
+        LoggerFactory.getOut().getLogger().setDateFormat(dateFormat);
 
         LACore.setServer(new AuthorizeServer());
         LACore.getServer().start();
