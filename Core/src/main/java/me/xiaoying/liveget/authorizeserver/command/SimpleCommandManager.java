@@ -55,6 +55,9 @@ public class SimpleCommandManager implements CommandManager {
 
     @Override
     public Command getCommand(String command) {
+        if (command == null)
+            return null;
+
         command = command.toLowerCase(Locale.ENGLISH);
         String origin = command;
         command = this.matchCommand(command);
