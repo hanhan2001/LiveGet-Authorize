@@ -12,4 +12,9 @@ public class ConsoleSender implements CommandSender {
     public void sendMessage(String message) {
         LACore.getLogger().info(message);
     }
+
+    @Override
+    public boolean isAdmin() {
+        return true;
+    }
 }

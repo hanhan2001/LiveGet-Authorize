@@ -4,4 +4,6 @@ public interface CommandSender {
     String getName();
 
     void sendMessage(String message);
+
+    boolean isAdmin();
 }
