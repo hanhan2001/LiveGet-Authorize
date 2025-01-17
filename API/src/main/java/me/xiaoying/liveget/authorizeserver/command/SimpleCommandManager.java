@@ -22,6 +22,7 @@ public class SimpleCommandManager implements CommandManager {
 
     @Override
     public Command getCommand(String command) {
+        command = command.toLowerCase(Locale.ENGLISH);
         String origin = command;
         command = this.matchCommand(command);
 
@@ -31,7 +32,7 @@ public class SimpleCommandManager implements CommandManager {
 
         for (Command c : this.knownCommands.values()) {
             if (!c.getAlias().contains(origin))
-                return null;
+                continue;
 
             return c;
         }
