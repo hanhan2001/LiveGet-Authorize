@@ -47,7 +47,7 @@ public class UserCommand extends SCommand {
 
         boolean isDo = false;
         for (RegisteredCommand registeredCommand : this.getRegisteredCommands().get(head)) {
-            if (registeredCommand.getLength() != args.length)
+            if (registeredCommand.getLength() != args.length && registeredCommand.getLength() != -1)
                 continue;
 
             registeredCommand.getSubCommand().performCommand(sender, args);
