@@ -5,6 +5,7 @@ import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.plugin.PluginManager;
 import me.xiaoying.liveget.authorizeserver.scheduler.ScheduledManager;
 import me.xiaoying.liveget.authorizeserver.server.Server;
+import me.xiaoying.liveget.authorizeserver.user.UserManager;
 import me.xiaoying.logger.Logger;
 
 import java.io.File;
@@ -42,6 +43,15 @@ public class LACore {
      */
     public static File getDataFolder() {
         return new File(System.getProperty("user.dir"));
+    }
+
+    /**
+     * Get user manager of server
+     *
+     * @return UserManager
+     */
+    public static UserManager getUserManager() {
+        return LACore.server.getUserManager();
     }
 
     /**
