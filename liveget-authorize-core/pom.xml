@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>Core</artifactId>
+    <artifactId>liveget-authorize-core</artifactId>
 
     <build>
         <finalName>${parent.artifactId}-V${version}</finalName>
@@ -33,7 +33,7 @@
         <!-- API -->
         <dependency>
             <groupId>me.xiaoying.liveget.authorizeserver</groupId>
-            <artifactId>API</artifactId>
+            <artifactId>liveget-authorize-api</artifactId>
             <version>${version}</version>
         </dependency>
         <!-- JLine -->

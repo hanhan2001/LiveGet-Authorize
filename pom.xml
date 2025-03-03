@@ -14,8 +14,8 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>API</module>
-        <module>Core</module>
+        <module>liveget-authorize-api</module>
+        <module>liveget-authorize-core</module>
     </modules>
 
     <properties>
