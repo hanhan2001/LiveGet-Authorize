@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver.plugin;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.command.Command;
+import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 import me.xiaoying.liveget.authorizeserver.server.Server;
 import me.xiaoying.liveget.authorizeserver.utils.Preconditions;
 
@@ -140,6 +141,11 @@ public class JavaPlugin extends PluginBase {
 
     @Override
     public void registerCommand(Command command) {
+        LACore.getCommandManager().registerCommand(this, command);
+    }
+
+    @Override
+    public void registerCommand(SCommand command) {
         LACore.getCommandManager().registerCommand(this, command);
     }
 
