@@ -15,7 +15,7 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 
 /**
- * Plugin access for other user
+ * Plugin access for developer
  */
 public class JavaPlugin extends PluginBase {
     private JavaPluginLoader loader;
