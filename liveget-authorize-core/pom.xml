@@ -12,7 +12,7 @@
     <artifactId>liveget-authorize-core</artifactId>
 
     <build>
-        <finalName>${parent.artifactId}-V${version}</finalName>
+        <finalName>${artifactId}-V${version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

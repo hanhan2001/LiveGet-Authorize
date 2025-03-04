@@ -18,7 +18,7 @@
     </properties>
 
     <build>
-        <finalName>${parent.artifactId}-API-${version}</finalName>
+        <finalName>${artifactId}-API-${version}</finalName>
     </build>
 
 </project>
