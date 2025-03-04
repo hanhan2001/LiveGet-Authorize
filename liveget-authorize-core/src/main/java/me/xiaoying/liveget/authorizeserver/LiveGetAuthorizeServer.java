@@ -18,7 +18,7 @@ public class LiveGetAuthorizeServer {
         String dateFormat = "HH:mm:ss";
         LACore.getLogger().setDateFormat(dateFormat);
         LoggerFactory.getOut().getLogger().setDateFormat(dateFormat);
-        LoggerFactory.getOut().getLogger().setDateFormat(dateFormat);
+        LoggerFactory.getErr().getLogger().setDateFormat(dateFormat);
 
         LACore.setServer(new AuthorizeServer());
         LACore.getServer().start();
