@@ -55,6 +55,7 @@ public class Terminal implements Listener {
                 command.execute(LACore.getConsoleCommandSender(), command, head, args);
             } catch (Exception e) {
                 LACore.getLogger().warn(e.getMessage());
+                e.printStackTrace();
             }
         }, 0, 0);
     }
