@@ -2,7 +2,6 @@ package me.xiaoying.liveget.authorizeserver.terminal;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.command.Command;
-import me.xiaoying.liveget.authorizeserver.command.CommandExecutor;
 import me.xiaoying.liveget.authorizeserver.scheduler.SimpleSchedulerManager;
 import me.xiaoying.logger.event.EventHandler;
 import me.xiaoying.logger.event.Listener;

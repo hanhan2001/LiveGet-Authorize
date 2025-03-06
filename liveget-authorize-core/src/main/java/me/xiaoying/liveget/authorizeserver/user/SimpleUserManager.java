@@ -3,7 +3,6 @@ package me.xiaoying.liveget.authorizeserver.user;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.LiveGetAuthorizeServer;
 import me.xiaoying.liveget.authorizeserver.file.FileConfig;
 import me.xiaoying.liveget.authorizeserver.permission.Permission;
@@ -11,9 +10,11 @@ import me.xiaoying.liveget.authorizeserver.utils.DateUtil;
 import me.xiaoying.sql.entity.Column;
 import me.xiaoying.sql.entity.Record;
 import me.xiaoying.sql.entity.Table;
-import me.xiaoying.sql.sentence.*;
+import me.xiaoying.sql.sentence.Condition;
+import me.xiaoying.sql.sentence.Create;
+import me.xiaoying.sql.sentence.Insert;
+import me.xiaoying.sql.sentence.Select;
 
-import java.io.Console;
 import java.text.DecimalFormat;
 import java.util.*;
 
