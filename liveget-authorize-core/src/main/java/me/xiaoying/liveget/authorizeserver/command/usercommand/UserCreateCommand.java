@@ -24,7 +24,7 @@ public class UserCreateCommand extends SCommand {
 
     @Override
     public void performCommand(CommandSender sender, String[] args) {
-        if (!sender.isAdmin()) {
+        if (!sender.hasPermission("authorize.admin") && !sender.isAdmin()) {
             sender.sendMessage(FileLanguage.COMMAND_MISSING_PERMISSION);
             return;
         }
