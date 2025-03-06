@@ -2,6 +2,7 @@ package me.xiaoying.liveget.authorizeserver.command.usercommand;
 
 import me.xiaoying.liveget.authorizeserver.LACore;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
+import me.xiaoying.liveget.authorizeserver.file.FileLanguage;
 import me.xiaoying.liveget.authorizeserver.scommand.Command;
 import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
 
@@ -23,6 +24,11 @@ public class UserCreateCommand extends SCommand {
 
     @Override
     public void performCommand(CommandSender sender, String[] args) {
+        if (!sender.isAdmin()) {
+            sender.sendMessage(FileLanguage.COMMAND_MISSING_PERMISSION);
+            return;
+        }
+
         String email = args[0], password = args[1], phone = args[2];
 
         if (LACore.getUserManager().getUserByEmail(email) != null) {
