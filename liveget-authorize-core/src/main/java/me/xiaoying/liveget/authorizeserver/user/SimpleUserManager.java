@@ -91,7 +91,12 @@ public class SimpleUserManager implements UserManager {
         List<Table> tables = LiveGetAuthorizeServer.getSqlFactory().run(select.condition(new Condition(key, value, Condition.Type.EQUAL)));
         if (tables.isEmpty())
             return null;
-        Record record = tables.get(0).getRecords().get(0);
+
+        List<Record> records = tables.get(0).getRecords();
+        if (records.isEmpty())
+            return null;
+
+        Record record = records.get(0);
 
         Map<String, Permission> permissions = new HashMap<>();
         JsonArray jsonArray = JsonParser.parseString(record.get("permissions").toString()).getAsJsonArray();
