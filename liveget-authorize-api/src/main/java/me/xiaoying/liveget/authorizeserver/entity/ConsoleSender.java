@@ -17,4 +17,9 @@ public class ConsoleSender implements CommandSender {
     public boolean isAdmin() {
         return true;
     }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return true;
+    }
 }

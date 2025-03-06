@@ -5,5 +5,18 @@ public interface CommandSender {
 
     void sendMessage(String message);
 
+    /**
+     * Determine user is admin
+     *
+     * @return Is admin ot not
+     */
     boolean isAdmin();
+
+    /**
+     * Get sender has permission
+     *
+     * @param permission Check permission
+     * @return Has permission or not
+     */
+    boolean hasPermission(String permission);
 }
