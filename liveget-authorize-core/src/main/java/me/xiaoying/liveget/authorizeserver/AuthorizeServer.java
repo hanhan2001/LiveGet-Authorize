@@ -3,10 +3,7 @@ package me.xiaoying.liveget.authorizeserver;
 import me.xiaoying.liveget.authorizeserver.command.*;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.entity.ConsoleSender;
-import me.xiaoying.liveget.authorizeserver.file.FileConfig;
-import me.xiaoying.liveget.authorizeserver.file.FileLanguage;
-import me.xiaoying.liveget.authorizeserver.file.FileManager;
-import me.xiaoying.liveget.authorizeserver.file.SimpleFileManager;
+import me.xiaoying.liveget.authorizeserver.file.*;
 import me.xiaoying.liveget.authorizeserver.plugin.PluginManager;
 import me.xiaoying.liveget.authorizeserver.plugin.SimplePluginManager;
 import me.xiaoying.liveget.authorizeserver.scheduler.ScheduledManager;
@@ -107,6 +104,7 @@ public class AuthorizeServer implements Server {
         LACore.getLogger().info("Loading file...");
         this.fileManager = new SimpleFileManager();
         this.fileManager.register(new FileConfig());
+        this.fileManager.register(new FileMessage());
         this.fileManager.register(new FileLanguage());
         this.fileManager.loads();
 
