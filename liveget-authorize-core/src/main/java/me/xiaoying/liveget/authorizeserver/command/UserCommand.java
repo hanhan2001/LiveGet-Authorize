@@ -1,6 +1,7 @@
 package me.xiaoying.liveget.authorizeserver.command;
 
 import me.xiaoying.liveget.authorizeserver.command.usercommand.UserCreateCommand;
+import me.xiaoying.liveget.authorizeserver.command.usercommand.UserInfoCommand;
 import me.xiaoying.liveget.authorizeserver.entity.CommandSender;
 import me.xiaoying.liveget.authorizeserver.scommand.RegisteredCommand;
 import me.xiaoying.liveget.authorizeserver.scommand.SCommand;
@@ -12,6 +13,7 @@ import java.util.List;
 @me.xiaoying.liveget.authorizeserver.scommand.Command(values = "user", length = -1)
 public class UserCommand extends SCommand {
     public UserCommand() {
+        this.registerCommand(new UserInfoCommand());
         this.registerCommand(new UserCreateCommand());
     }
 
