@@ -2,6 +2,21 @@
 
 #用户
 User:
+  #用户信息
+  Info: |
+    {
+      "type": "user",
+      "code": 220,
+      "user": {
+        "name": "%name%",
+        "email": "%email%",
+        "UUID": "%uuid%",
+        "group": "%group%",
+        "ip": "%ip%",
+        "registerTime": "%registerTime%",
+        "lastLoginTime": "%lastLoginTime%"
+      }
+    }
   #创建用户
   Create:
     #请求过快
@@ -31,6 +46,13 @@ User:
         "type": "user",
         "code": 501,
         "message": "wrong password"
+      }
+    #用户创建成功
+    CreateSuccess: |
+      {
+        "type": "user",
+        "code": 201,
+        "message": "create success!"
       }
 
 #参数
