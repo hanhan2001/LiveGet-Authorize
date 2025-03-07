@@ -1,6 +1,7 @@
 package me.xiaoying.liveget.authorizeserver.user;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.xiaoying.liveget.authorizeserver.LiveGetAuthorizeServer;
@@ -100,20 +101,28 @@ public class SimpleUserManager implements UserManager {
         Record record = records.get(0);
 
         Map<String, Permission> permissions = new HashMap<>();
-        JsonArray jsonArray = JsonParser.parseString(record.get("permissions").toString()).getAsJsonArray();
-        for (int i = 0; i < jsonArray.size(); i++) {
-            String permission;
-            Date save = null, over = null;
+        String perms = record.get("permissions").toString();
+        if (perms != null && !perms.isEmpty()) {
+            JsonElement element = JsonParser.parseString(perms);
+            JsonArray jsonArray = new JsonArray();
+            if (element != null)
+                jsonArray = element.getAsJsonArray();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String permission;
+                Date save = null, over = null;
 
-            JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-            permission = jsonObject.get("permission").getAsString();
-            if (jsonObject.has("save")) save = DateUtil.parse(jsonObject.get("save").getAsString(), FileConfig.SETTING_DATEFORMAT);
-            if (jsonObject.has("save")) over = DateUtil.parse(jsonObject.get("over").getAsString(), FileConfig.SETTING_DATEFORMAT);
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                permission = jsonObject.get("permissions").getAsString();
+                if (jsonObject.has("save"))
+                    save = DateUtil.parse(jsonObject.get("save").getAsString(), FileConfig.SETTING_DATEFORMAT);
+                if (jsonObject.has("save"))
+                    over = DateUtil.parse(jsonObject.get("over").getAsString(), FileConfig.SETTING_DATEFORMAT);
 
-            permissions.put(permission, new ServerPermission(permission, save, over));
+                permissions.put(permission, new ServerPermission(permission, save, over));
+            }
         }
 
-        ServerUser user = new ServerUser(record.get("uuid").toString(), record.get("name").toString(), record.get("email").toString(), record.get("password").toString(), Long.parseLong(record.get("phone_number").toString()), record.get("group").toString(), permissions, record.get("ip").toString(), DateUtil.parse(record.get("registerTime").toString(), FileConfig.SETTING_DATEFORMAT), DateUtil.parse(record.get("lastLoginTime").toString(), FileConfig.SETTING_DATEFORMAT));
+        ServerUser user = new ServerUser(record.get("uuid").toString(), record.get("name").toString(), record.get("email").toString(), record.get("password").toString(), Long.parseLong(record.get("phone_number").toString()), record.get("group").toString(), permissions, record.get("ip").toString(), DateUtil.parse(record.get("register_time").toString(), FileConfig.SETTING_DATEFORMAT), DateUtil.parse(record.get("last_login_time").toString(), FileConfig.SETTING_DATEFORMAT));
         this.recordUser(user);
         return user;
     }
