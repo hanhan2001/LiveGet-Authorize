@@ -12,19 +12,26 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 
 public abstract class SFile {
-    private final String path;
     private String folderName;
+    private String outFolder;
+    private final String resourcesFile;
     private final File file;
     private YamlConfiguration configuration;
 
-    public SFile(String file) {
-        this.file = new File(LACore.getDataFolder(), file);
-        this.path = file;
+    public SFile(String resourceFile) {
+        this(resourceFile, LACore.getDataFolder().getAbsolutePath());
     }
 
-    public SFile(String path, String name) {
-        this.file = new File(path, name);
-        this.path = name;
+    public SFile(String resourceFile, String outFolder) {
+        this.resourcesFile = resourceFile;
+        this.outFolder = outFolder;
+
+        if (resourceFile.contains("/") || resourceFile.contains("\\")) {
+            String s = resourceFile.replace("\\", "/");
+            String[] split = s.split("/");
+            this.file = new File(this.outFolder, split[split.length - 1]);
+        } else
+            this.file = new File(LACore.getDataFolder(), this.resourcesFile);
     }
 
     public void setSingleFolder(String folderName) {
@@ -52,12 +59,9 @@ public abstract class SFile {
     }
 
     public void load() {
-        if (!this.file.exists()) {
-            if (this.path.contains("/"))
-                this.saveResource(this.path, false);
-            else
-                this.saveResource(this.file.getName(), false);
-        }
+        if (!this.file.exists())
+            this.saveResource(this.resourcesFile, false);
+
         this.configuration = YamlConfiguration.loadConfiguration(this.file);
         this.onLoad();
     }
@@ -91,15 +95,15 @@ public abstract class SFile {
     }
 
     public void saveResource(String resourcePath, boolean replace) {
-        if (resourcePath == null || resourcePath.equals(""))
+        if (resourcePath == null || resourcePath.isEmpty())
             throw new IllegalArgumentException("ResourcePath cannot be null or empty");
 
         resourcePath = resourcePath.replace('\\', '/');
-        InputStream in = getResource(resourcePath);
+        InputStream in = this.getResource(resourcePath);
         if (in == null)
             throw new IllegalArgumentException("The embedded resource '" + resourcePath + "' cannot be found");
 
-        File outFile = this.getSingleFolder() == null ? new File(LACore.getDataFolder(), resourcePath) : new File(System.getProperty("user.dir") + "/plugins/" + this.getSingleFolder(), resourcePath);
+        File outFile = new File(this.outFolder, this.file.getName());
         if (!outFile.getParentFile().exists()) outFile.getParentFile().mkdirs();
 
         int lastIndex = resourcePath.lastIndexOf('/');
